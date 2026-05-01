@@ -1,0 +1,1168 @@
+[
+  {
+    "screenId": "c9c9785b21fe49f3ae29e36b764cc87a",
+    "screenTitle": "Rezervasyon Ekle/Düzenle",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "button",
+        "label": "close",
+        "line": 118
+      },
+      {
+        "type": "button",
+        "label": "İptal",
+        "line": 184
+      },
+      {
+        "type": "button",
+        "label": "Kaydet",
+        "line": 187
+      },
+      {
+        "type": "input",
+        "label": "select",
+        "inputType": "select",
+        "line": 139
+      },
+      {
+        "type": "input",
+        "label": "date",
+        "inputType": "date",
+        "line": 152
+      },
+      {
+        "type": "input",
+        "label": "time",
+        "inputType": "time",
+        "line": 160
+      },
+      {
+        "type": "input",
+        "label": "time",
+        "inputType": "time",
+        "line": 164
+      },
+      {
+        "type": "input",
+        "label": "Örn: Q3 Pazarlama Planlaması",
+        "inputType": "text",
+        "placeholder": "Örn: Q3 Pazarlama Planlaması",
+        "line": 172
+      },
+      {
+        "type": "input",
+        "label": "Örn: Pazarlama Ekibi",
+        "inputType": "text",
+        "placeholder": "Örn: Pazarlama Ekibi",
+        "line": 177
+      },
+      {
+        "type": "form",
+        "label": "form",
+        "line": 132
+      }
+    ],
+    "navigation": [],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "close",
+        "line": 118
+      },
+      {
+        "type": "button",
+        "label": "İptal",
+        "line": 184
+      },
+      {
+        "type": "button",
+        "label": "Kaydet",
+        "line": 187
+      }
+    ],
+    "inputs": [
+      {
+        "type": "input",
+        "label": "select",
+        "inputType": "select",
+        "line": 139
+      },
+      {
+        "type": "input",
+        "label": "date",
+        "inputType": "date",
+        "line": 152
+      },
+      {
+        "type": "input",
+        "label": "time",
+        "inputType": "time",
+        "line": 160
+      },
+      {
+        "type": "input",
+        "label": "time",
+        "inputType": "time",
+        "line": 164
+      },
+      {
+        "type": "input",
+        "label": "Örn: Q3 Pazarlama Planlaması",
+        "inputType": "text",
+        "placeholder": "Örn: Q3 Pazarlama Planlaması",
+        "line": 172
+      },
+      {
+        "type": "input",
+        "label": "Örn: Pazarlama Ekibi",
+        "inputType": "text",
+        "placeholder": "Örn: Pazarlama Ekibi",
+        "line": 177
+      }
+    ],
+    "hardcodedData": [],
+    "totalInteractive": 10,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "6bd65c3e02a7403089d6f1b9a8fd54bc",
+    "screenTitle": "Profil Paneli",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "Kişisel Bilgiler Ad, iletişim ve profil detayları",
+        "href": "#",
+        "line": 154
+      },
+      {
+        "type": "link",
+        "label": "Güvenlik ve Şifre 2FA ve erişim kontrolleri",
+        "href": "#",
+        "line": 165
+      },
+      {
+        "type": "link",
+        "label": "Bildirim Tercihleri E-posta ve uygulama içi uyarılar",
+        "href": "#",
+        "line": 176
+      },
+      {
+        "type": "link",
+        "label": "Görünüm Karanlık Mod (Aktif)",
+        "href": "#",
+        "line": 190
+      },
+      {
+        "type": "button",
+        "label": "Kapat",
+        "line": 127
+      },
+      {
+        "type": "button",
+        "label": "Çıkış Yap",
+        "line": 204
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "Kişisel Bilgiler Ad, iletişim ve profil detayları",
+        "href": "#",
+        "line": 154
+      },
+      {
+        "type": "link",
+        "label": "Güvenlik ve Şifre 2FA ve erişim kontrolleri",
+        "href": "#",
+        "line": 165
+      },
+      {
+        "type": "link",
+        "label": "Bildirim Tercihleri E-posta ve uygulama içi uyarılar",
+        "href": "#",
+        "line": 176
+      },
+      {
+        "type": "link",
+        "label": "Görünüm Karanlık Mod (Aktif)",
+        "href": "#",
+        "line": 190
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "Kapat",
+        "line": 127
+      },
+      {
+        "type": "button",
+        "label": "Çıkış Yap",
+        "line": 204
+      }
+    ],
+    "inputs": [],
+    "hardcodedData": [],
+    "totalInteractive": 6,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "934be6c10d174861b762ed0686735869",
+    "screenTitle": "Rezervasyon Detay",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "Panel",
+        "href": "#",
+        "line": 131
+      },
+      {
+        "type": "link",
+        "label": "Odalar",
+        "href": "#",
+        "line": 136
+      },
+      {
+        "type": "link",
+        "label": "Takvim",
+        "href": "#",
+        "line": 141
+      },
+      {
+        "type": "link",
+        "label": "Analiz",
+        "href": "#",
+        "line": 146
+      },
+      {
+        "type": "link",
+        "label": "Ayarlar",
+        "href": "#",
+        "line": 158
+      },
+      {
+        "type": "link",
+        "label": "Yardım",
+        "href": "#",
+        "line": 162
+      },
+      {
+        "type": "link",
+        "label": "Takvim",
+        "href": "#",
+        "line": 199
+      },
+      {
+        "type": "button",
+        "label": "Hızlı Rapor",
+        "line": 152
+      },
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 179
+      },
+      {
+        "type": "button",
+        "label": "apps",
+        "line": 182
+      },
+      {
+        "type": "button",
+        "label": "Rezervasyon Ekle",
+        "line": 185
+      },
+      {
+        "type": "button",
+        "label": "Tümüne E-posta Gönder",
+        "line": 281
+      },
+      {
+        "type": "button",
+        "label": "Düzenle",
+        "line": 329
+      },
+      {
+        "type": "button",
+        "label": "İptal Et",
+        "line": 333
+      },
+      {
+        "type": "input",
+        "label": "Oda, toplantı veya kişi ara...",
+        "inputType": "text",
+        "placeholder": "Oda, toplantı veya kişi ara...",
+        "line": 175
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "Panel",
+        "href": "#",
+        "line": 131
+      },
+      {
+        "type": "link",
+        "label": "Odalar",
+        "href": "#",
+        "line": 136
+      },
+      {
+        "type": "link",
+        "label": "Takvim",
+        "href": "#",
+        "line": 141
+      },
+      {
+        "type": "link",
+        "label": "Analiz",
+        "href": "#",
+        "line": 146
+      },
+      {
+        "type": "link",
+        "label": "Ayarlar",
+        "href": "#",
+        "line": 158
+      },
+      {
+        "type": "link",
+        "label": "Yardım",
+        "href": "#",
+        "line": 162
+      },
+      {
+        "type": "link",
+        "label": "Takvim",
+        "href": "#",
+        "line": 199
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "Hızlı Rapor",
+        "line": 152
+      },
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 179
+      },
+      {
+        "type": "button",
+        "label": "apps",
+        "line": 182
+      },
+      {
+        "type": "button",
+        "label": "Rezervasyon Ekle",
+        "line": 185
+      },
+      {
+        "type": "button",
+        "label": "Tümüne E-posta Gönder",
+        "line": 281
+      },
+      {
+        "type": "button",
+        "label": "Düzenle",
+        "line": 329
+      },
+      {
+        "type": "button",
+        "label": "İptal Et",
+        "line": 333
+      }
+    ],
+    "inputs": [
+      {
+        "type": "input",
+        "label": "Oda, toplantı veya kişi ara...",
+        "inputType": "text",
+        "placeholder": "Oda, toplantı veya kişi ara...",
+        "line": 175
+      }
+    ],
+    "hardcodedData": [],
+    "totalInteractive": 15,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "c2a1710666664bcea4b281e11ac09948",
+    "screenTitle": "Ana Ekran (Dashboard)",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "Panel",
+        "href": "#",
+        "line": 121
+      },
+      {
+        "type": "link",
+        "label": "Odalar",
+        "href": "#",
+        "line": 126
+      },
+      {
+        "type": "link",
+        "label": "Takvim",
+        "href": "#",
+        "line": 130
+      },
+      {
+        "type": "link",
+        "label": "Analiz",
+        "href": "#",
+        "line": 134
+      },
+      {
+        "type": "link",
+        "label": "Ayarlar",
+        "href": "#",
+        "line": 148
+      },
+      {
+        "type": "link",
+        "label": "Yardım",
+        "href": "#",
+        "line": 152
+      },
+      {
+        "type": "button",
+        "label": "Hızlı Rapor",
+        "line": 141
+      },
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 171
+      },
+      {
+        "type": "button",
+        "label": "apps",
+        "line": 174
+      },
+      {
+        "type": "button",
+        "label": "Rezervasyon Ekle",
+        "line": 178
+      },
+      {
+        "type": "button",
+        "label": "Tümü",
+        "line": 195
+      },
+      {
+        "type": "button",
+        "label": "Boş",
+        "line": 196
+      },
+      {
+        "type": "button",
+        "label": "Dolu",
+        "line": 197
+      },
+      {
+        "type": "button",
+        "label": "Kapasite",
+        "line": 199
+      },
+      {
+        "type": "button",
+        "label": "Ekip",
+        "line": 204
+      },
+      {
+        "type": "button",
+        "label": "Tümünü Gör",
+        "line": 256
+      },
+      {
+        "type": "button",
+        "label": "Hızlı Rezerve Et",
+        "line": 299
+      },
+      {
+        "type": "button",
+        "label": "Takvime Git",
+        "line": 377
+      },
+      {
+        "type": "input",
+        "label": "Oda veya rezervasyon ara...",
+        "inputType": "text",
+        "placeholder": "Oda veya rezervasyon ara...",
+        "line": 166
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "Panel",
+        "href": "#",
+        "line": 121
+      },
+      {
+        "type": "link",
+        "label": "Odalar",
+        "href": "#",
+        "line": 126
+      },
+      {
+        "type": "link",
+        "label": "Takvim",
+        "href": "#",
+        "line": 130
+      },
+      {
+        "type": "link",
+        "label": "Analiz",
+        "href": "#",
+        "line": 134
+      },
+      {
+        "type": "link",
+        "label": "Ayarlar",
+        "href": "#",
+        "line": 148
+      },
+      {
+        "type": "link",
+        "label": "Yardım",
+        "href": "#",
+        "line": 152
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "Hızlı Rapor",
+        "line": 141
+      },
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 171
+      },
+      {
+        "type": "button",
+        "label": "apps",
+        "line": 174
+      },
+      {
+        "type": "button",
+        "label": "Rezervasyon Ekle",
+        "line": 178
+      },
+      {
+        "type": "button",
+        "label": "Tümü",
+        "line": 195
+      },
+      {
+        "type": "button",
+        "label": "Boş",
+        "line": 196
+      },
+      {
+        "type": "button",
+        "label": "Dolu",
+        "line": 197
+      },
+      {
+        "type": "button",
+        "label": "Kapasite",
+        "line": 199
+      },
+      {
+        "type": "button",
+        "label": "Ekip",
+        "line": 204
+      },
+      {
+        "type": "button",
+        "label": "Tümünü Gör",
+        "line": 256
+      },
+      {
+        "type": "button",
+        "label": "Hızlı Rezerve Et",
+        "line": 299
+      },
+      {
+        "type": "button",
+        "label": "Takvime Git",
+        "line": 377
+      }
+    ],
+    "inputs": [
+      {
+        "type": "input",
+        "label": "Oda veya rezervasyon ara...",
+        "inputType": "text",
+        "placeholder": "Oda veya rezervasyon ara...",
+        "line": 166
+      }
+    ],
+    "hardcodedData": [],
+    "totalInteractive": 19,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "82c96cc06c594d73a66ced3f366eb218",
+    "screenTitle": "Boş Durum",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "Panel",
+        "href": "#",
+        "line": 130
+      },
+      {
+        "type": "link",
+        "label": "Odalar",
+        "href": "#",
+        "line": 134
+      },
+      {
+        "type": "link",
+        "label": "Takvim",
+        "href": "#",
+        "line": 138
+      },
+      {
+        "type": "link",
+        "label": "Analiz",
+        "href": "#",
+        "line": 142
+      },
+      {
+        "type": "link",
+        "label": "Ayarlar",
+        "href": "#",
+        "line": 154
+      },
+      {
+        "type": "link",
+        "label": "Yardım",
+        "href": "#",
+        "line": 158
+      },
+      {
+        "type": "button",
+        "label": "Hızlı Rapor",
+        "line": 149
+      },
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 178
+      },
+      {
+        "type": "button",
+        "label": "apps",
+        "line": 181
+      },
+      {
+        "type": "button",
+        "label": "Rezervasyon Ekle",
+        "line": 185
+      },
+      {
+        "type": "button",
+        "label": "Yeni Rezervasyon Ekle",
+        "line": 210
+      },
+      {
+        "type": "input",
+        "label": "Rezervasyon veya oda ara...",
+        "inputType": "text",
+        "placeholder": "Rezervasyon veya oda ara...",
+        "line": 173
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "Panel",
+        "href": "#",
+        "line": 130
+      },
+      {
+        "type": "link",
+        "label": "Odalar",
+        "href": "#",
+        "line": 134
+      },
+      {
+        "type": "link",
+        "label": "Takvim",
+        "href": "#",
+        "line": 138
+      },
+      {
+        "type": "link",
+        "label": "Analiz",
+        "href": "#",
+        "line": 142
+      },
+      {
+        "type": "link",
+        "label": "Ayarlar",
+        "href": "#",
+        "line": 154
+      },
+      {
+        "type": "link",
+        "label": "Yardım",
+        "href": "#",
+        "line": 158
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "Hızlı Rapor",
+        "line": 149
+      },
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 178
+      },
+      {
+        "type": "button",
+        "label": "apps",
+        "line": 181
+      },
+      {
+        "type": "button",
+        "label": "Rezervasyon Ekle",
+        "line": 185
+      },
+      {
+        "type": "button",
+        "label": "Yeni Rezervasyon Ekle",
+        "line": 210
+      }
+    ],
+    "inputs": [
+      {
+        "type": "input",
+        "label": "Rezervasyon veya oda ara...",
+        "inputType": "text",
+        "placeholder": "Rezervasyon veya oda ara...",
+        "line": 173
+      }
+    ],
+    "hardcodedData": [],
+    "totalInteractive": 12,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "f80af37b5a57435382a054a23fc61222",
+    "screenTitle": "Hata Durumu",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "Yardım Al",
+        "href": "#",
+        "line": 155
+      },
+      {
+        "type": "button",
+        "label": "Tekrar Dene",
+        "line": 151
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "Yardım Al",
+        "href": "#",
+        "line": 155
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "Tekrar Dene",
+        "line": 151
+      }
+    ],
+    "inputs": [],
+    "hardcodedData": [],
+    "totalInteractive": 2,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "df4ad0b6ece54777a90801d7b0defb3c",
+    "screenTitle": "İstatistikler",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "Panel",
+        "href": "#",
+        "line": 144
+      },
+      {
+        "type": "link",
+        "label": "Odalar",
+        "href": "#",
+        "line": 149
+      },
+      {
+        "type": "link",
+        "label": "Takvim",
+        "href": "#",
+        "line": 154
+      },
+      {
+        "type": "link",
+        "label": "Analiz",
+        "href": "#",
+        "line": 160
+      },
+      {
+        "type": "link",
+        "label": "Ayarlar",
+        "href": "#",
+        "line": 172
+      },
+      {
+        "type": "link",
+        "label": "Yardım",
+        "href": "#",
+        "line": 176
+      },
+      {
+        "type": "button",
+        "label": "Hızlı Rapor",
+        "line": 167
+      },
+      {
+        "type": "button",
+        "label": "Rezervasyon Ekle",
+        "line": 200
+      },
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 206
+      },
+      {
+        "type": "button",
+        "label": "apps",
+        "line": 210
+      },
+      {
+        "type": "button",
+        "label": "Son 30 Gün",
+        "line": 230
+      },
+      {
+        "type": "button",
+        "label": "Dışa Aktar",
+        "line": 236
+      },
+      {
+        "type": "button",
+        "label": "more_horiz",
+        "line": 296
+      },
+      {
+        "type": "input",
+        "label": "Oda, ekip veya rezervasyon ara...",
+        "inputType": "text",
+        "placeholder": "Oda, ekip veya rezervasyon ara...",
+        "line": 194
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "Panel",
+        "href": "#",
+        "line": 144
+      },
+      {
+        "type": "link",
+        "label": "Odalar",
+        "href": "#",
+        "line": 149
+      },
+      {
+        "type": "link",
+        "label": "Takvim",
+        "href": "#",
+        "line": 154
+      },
+      {
+        "type": "link",
+        "label": "Analiz",
+        "href": "#",
+        "line": 160
+      },
+      {
+        "type": "link",
+        "label": "Ayarlar",
+        "href": "#",
+        "line": 172
+      },
+      {
+        "type": "link",
+        "label": "Yardım",
+        "href": "#",
+        "line": 176
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "Hızlı Rapor",
+        "line": 167
+      },
+      {
+        "type": "button",
+        "label": "Rezervasyon Ekle",
+        "line": 200
+      },
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 206
+      },
+      {
+        "type": "button",
+        "label": "apps",
+        "line": 210
+      },
+      {
+        "type": "button",
+        "label": "Son 30 Gün",
+        "line": 230
+      },
+      {
+        "type": "button",
+        "label": "Dışa Aktar",
+        "line": 236
+      },
+      {
+        "type": "button",
+        "label": "more_horiz",
+        "line": 296
+      }
+    ],
+    "inputs": [
+      {
+        "type": "input",
+        "label": "Oda, ekip veya rezervasyon ara...",
+        "inputType": "text",
+        "placeholder": "Oda, ekip veya rezervasyon ara...",
+        "line": 194
+      }
+    ],
+    "hardcodedData": [],
+    "totalInteractive": 14,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  },
+  {
+    "screenId": "a3eb39cd68844960940d44a2364ca7a7",
+    "screenTitle": "Ayarlar",
+    "deviceType": "DESKTOP",
+    "elements": [
+      {
+        "type": "link",
+        "label": "Panel",
+        "href": "#",
+        "line": 133
+      },
+      {
+        "type": "link",
+        "label": "Odalar",
+        "href": "#",
+        "line": 137
+      },
+      {
+        "type": "link",
+        "label": "Takvim",
+        "href": "#",
+        "line": 141
+      },
+      {
+        "type": "link",
+        "label": "Analiz",
+        "href": "#",
+        "line": 145
+      },
+      {
+        "type": "link",
+        "label": "Ayarlar",
+        "href": "#",
+        "line": 160
+      },
+      {
+        "type": "link",
+        "label": "Yardım",
+        "href": "#",
+        "line": 165
+      },
+      {
+        "type": "button",
+        "label": "Hızlı Rapor",
+        "line": 152
+      },
+      {
+        "type": "button",
+        "label": "Rezervasyon Ekle",
+        "line": 188
+      },
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 193
+      },
+      {
+        "type": "button",
+        "label": "apps",
+        "line": 196
+      },
+      {
+        "type": "button",
+        "label": "Türkçe",
+        "line": 233
+      },
+      {
+        "type": "button",
+        "label": "English",
+        "line": 234
+      },
+      {
+        "type": "button",
+        "label": "Verileri Dışa Aktar (Export JSON)",
+        "line": 269
+      },
+      {
+        "type": "button",
+        "label": "Tüm Verileri Temizle",
+        "line": 280
+      },
+      {
+        "type": "input",
+        "label": "Oda veya misafir ara...",
+        "inputType": "text",
+        "placeholder": "Oda veya misafir ara...",
+        "line": 179
+      }
+    ],
+    "navigation": [
+      {
+        "type": "link",
+        "label": "Panel",
+        "href": "#",
+        "line": 133
+      },
+      {
+        "type": "link",
+        "label": "Odalar",
+        "href": "#",
+        "line": 137
+      },
+      {
+        "type": "link",
+        "label": "Takvim",
+        "href": "#",
+        "line": 141
+      },
+      {
+        "type": "link",
+        "label": "Analiz",
+        "href": "#",
+        "line": 145
+      },
+      {
+        "type": "link",
+        "label": "Ayarlar",
+        "href": "#",
+        "line": 160
+      },
+      {
+        "type": "link",
+        "label": "Yardım",
+        "href": "#",
+        "line": 165
+      }
+    ],
+    "buttons": [
+      {
+        "type": "button",
+        "label": "Hızlı Rapor",
+        "line": 152
+      },
+      {
+        "type": "button",
+        "label": "Rezervasyon Ekle",
+        "line": 188
+      },
+      {
+        "type": "button",
+        "label": "notifications",
+        "line": 193
+      },
+      {
+        "type": "button",
+        "label": "apps",
+        "line": 196
+      },
+      {
+        "type": "button",
+        "label": "Türkçe",
+        "line": 233
+      },
+      {
+        "type": "button",
+        "label": "English",
+        "line": 234
+      },
+      {
+        "type": "button",
+        "label": "Verileri Dışa Aktar (Export JSON)",
+        "line": 269
+      },
+      {
+        "type": "button",
+        "label": "Tüm Verileri Temizle",
+        "line": 280
+      }
+    ],
+    "inputs": [
+      {
+        "type": "input",
+        "label": "Oda veya misafir ara...",
+        "inputType": "text",
+        "placeholder": "Oda veya misafir ara...",
+        "line": 179
+      }
+    ],
+    "hardcodedData": [],
+    "totalInteractive": 15,
+    "requiresRouter": false,
+    "requiresDragDrop": false
+  }
+]
