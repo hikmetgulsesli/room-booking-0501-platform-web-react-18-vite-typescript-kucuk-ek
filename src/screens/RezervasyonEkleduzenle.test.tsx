@@ -100,7 +100,7 @@ describe('RezervasyonEkleduzenle', () => {
       expect(mockActions.addReservation).toHaveBeenCalled();
     });
 
-    const calledWith = mockActions.addReservation.mock.calls[0][0];
+    const calledWith = (mockActions.addReservation as ReturnType<typeof vi.fn>).mock.calls[0][0];
     expect(calledWith.title).toBe('Yeni Toplantı');
     expect(calledWith.roomId).toBe('room-2');
     expect(calledWith.date).toBe('2024-12-20');

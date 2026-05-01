@@ -101,9 +101,9 @@ export function RezervasyonEkleduzenle(props: RezervasyonEkleduzenleProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
       {/* Oda Seçimi */}
       <div className="space-y-xs">
-      <label className="font-label-md text-label-md text-on-surface block">Oda Seçimi <span className="text-error">*</span></label>
+      <label className="font-label-md text-label-md text-on-surface block" htmlFor="room-select">Oda Seçimi <span className="text-error">*</span></label>
       <div className="relative">
-      <select className="w-full bg-[#1E293B] border border-[#334155] rounded-md px-md py-sm font-body-md text-body-md text-on-surface appearance-none focus:outline-none focus:border-primary focus:ring-[3px] focus:ring-primary/20 transition-all" value={roomId} onChange={(e) => setRoomId(e.target.value)} required>
+      <select id="room-select" className="w-full bg-[#1E293B] border border-[#334155] rounded-md px-md py-sm font-body-md text-body-md text-on-surface appearance-none focus:outline-none focus:border-primary focus:ring-[3px] focus:ring-primary/20 transition-all" value={roomId} onChange={(e) => setRoomId(e.target.value)} required>
       <option disabled={true} value="">Oda Seçin</option>
       {props.rooms.map(r => (
         <option key={r.id} value={r.id}>{r.name} ({r.capacity} Kişi)</option>
@@ -114,34 +114,34 @@ export function RezervasyonEkleduzenle(props: RezervasyonEkleduzenleProps) {
       </div>
       {/* Tarih */}
       <div className="space-y-xs">
-      <label className="font-label-md text-label-md text-on-surface block">Tarih <span className="text-error">*</span></label>
+      <label className="font-label-md text-label-md text-on-surface block" htmlFor="date-input">Tarih <span className="text-error">*</span></label>
       <div className="relative">
-      <input className="w-full bg-[#1E293B] border border-[#334155] rounded-md px-md py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-[3px] focus:ring-primary/20 transition-all [color-scheme:dark]" type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+      <input id="date-input" className="w-full bg-[#1E293B] border border-[#334155] rounded-md px-md py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-[3px] focus:ring-primary/20 transition-all [color-scheme:dark]" type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
       </div>
       </div>
       </div>
       {/* Section: Saatler */}
       <div className="grid grid-cols-2 gap-md p-md bg-[#0F172A]/50 rounded-lg border border-[#334155]/50">
       <div className="space-y-xs">
-      <label className="font-label-md text-label-md text-on-surface block">Başlangıç Saati <span className="text-error">*</span></label>
-      <input className="w-full bg-[#1E293B] border border-[#334155] rounded-md px-md py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-[3px] focus:ring-primary/20 transition-all [color-scheme:dark]" type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
+      <label className="font-label-md text-label-md text-on-surface block" htmlFor="start-time">Başlangıç Saati <span className="text-error">*</span></label>
+      <input id="start-time" className="w-full bg-[#1E293B] border border-[#334155] rounded-md px-md py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-[3px] focus:ring-primary/20 transition-all [color-scheme:dark]" type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
       </div>
       <div className="space-y-xs">
-      <label className="font-label-md text-label-md text-on-surface block">Bitiş Saati <span className="text-error">*</span></label>
-      <input className={`w-full bg-[#1E293B] border rounded-md px-md py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:ring-[3px] transition-all [color-scheme:dark] ${hasConflict ? 'border-error focus:border-error focus:ring-error/20' : 'border-[#334155] focus:border-primary focus:ring-primary/20'}`} type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
+      <label className="font-label-md text-label-md text-on-surface block" htmlFor="end-time">Bitiş Saati <span className="text-error">*</span></label>
+      <input id="end-time" className={`w-full bg-[#1E293B] border rounded-md px-md py-sm font-body-md text-body-md text-on-surface focus:outline-none focus:ring-[3px] transition-all [color-scheme:dark] ${hasConflict ? 'border-error focus:border-error focus:ring-error/20' : 'border-[#334155] focus:border-primary focus:ring-primary/20'}`} type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
       </div>
       </div>
       {/* Section: Detaylar */}
       <div className="space-y-md">
       {/* Toplantı Adı */}
       <div className="space-y-xs">
-      <label className="font-label-md text-label-md text-on-surface block">Toplantı Adı <span className="text-error">*</span></label>
-      <input className="w-full bg-[#1E293B] border border-[#334155] rounded-md px-md py-sm font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary focus:ring-[3px] focus:ring-primary/20 transition-all" placeholder="Örn: Q3 Pazarlama Planlaması" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+      <label className="font-label-md text-label-md text-on-surface block" htmlFor="title-input">Toplantı Adı <span className="text-error">*</span></label>
+      <input id="title-input" className="w-full bg-[#1E293B] border border-[#334155] rounded-md px-md py-sm font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary focus:ring-[3px] focus:ring-primary/20 transition-all" placeholder="Örn: Q3 Pazarlama Planlaması" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
       </div>
       {/* Ekip Adı */}
       <div className="space-y-xs">
-      <label className="font-label-md text-label-md text-on-surface block">Ekip Adı</label>
-      <input className="w-full bg-[#1E293B] border border-[#334155] rounded-md px-md py-sm font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary focus:ring-[3px] focus:ring-primary/20 transition-all" placeholder="Örn: Pazarlama Ekibi" type="text" value={team} onChange={(e) => setTeam(e.target.value)} />
+      <label className="font-label-md text-label-md text-on-surface block" htmlFor="team-input">Ekip Adı</label>
+      <input id="team-input" className="w-full bg-[#1E293B] border border-[#334155] rounded-md px-md py-sm font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary focus:ring-[3px] focus:ring-primary/20 transition-all" placeholder="Örn: Pazarlama Ekibi" type="text" value={team} onChange={(e) => setTeam(e.target.value)} />
       </div>
       </div>
       </form>

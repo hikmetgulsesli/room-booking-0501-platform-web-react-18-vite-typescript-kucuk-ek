@@ -66,7 +66,8 @@ describe('RezervasyonDetay', () => {
 
     expect(screen.getByText('Q3 Ürün Stratejisi Değerlendirmesi')).toBeInTheDocument();
     expect(screen.getByText('Bosphorus Toplantı Odası')).toBeInTheDocument();
-    expect(screen.getByText('Ayşe Yılmaz')).toBeInTheDocument();
+    // Organizer name may appear multiple times; use getAllByText
+    expect(screen.getAllByText('Ayşe Yılmaz').length).toBeGreaterThanOrEqual(1);
   });
 
   it('navigates to edit on Düzenle button click', () => {
@@ -140,9 +141,10 @@ describe('RezervasyonDetay', () => {
       />
     );
 
-    expect(screen.getByText('Ayşe Yılmaz')).toBeInTheDocument();
-    expect(screen.getByText('Mehmet Demir')).toBeInTheDocument();
-    expect(screen.getByText('Can Kaya')).toBeInTheDocument();
+    // Attendee names may appear in multiple sections; verify at least one occurrence
+    expect(screen.getAllByText('Ayşe Yılmaz').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText('Mehmet Demir').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText('Can Kaya').length).toBeGreaterThanOrEqual(1);
   });
 
   it('shows organizer badge on correct attendee', () => {
