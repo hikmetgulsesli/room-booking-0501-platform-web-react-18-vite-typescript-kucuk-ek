@@ -8,10 +8,55 @@
 // 4. Replace placeholder data with props/state
 
 import { useState } from "react";
+import type { AppSettings, AppActions } from "../types/domain";
+import { exportData, clearStorage } from "../utils/storage";
 
-interface AyarlarProps {}
+interface AyarlarProps {
+  settings: AppSettings;
+  actions: AppActions;
+  searchQuery: string;
+}
 
 export function Ayarlar(props: AyarlarProps) {
+  const [localSearch, setLocalSearch] = useState(props.searchQuery);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalSearch(e.target.value);
+    props.actions.setSearch(e.target.value);
+  };
+
+  const handleExport = () => {
+    const data = exportData({
+      view: 'settings',
+      previousView: null,
+      rooms: [],
+      reservations: [],
+      user: { id: '', name: '', email: '', role: '', department: '' },
+      settings: props.settings,
+      searchQuery: '',
+      selectedReservationId: null,
+      selectedRoomId: null,
+      filterStatus: 'all',
+      filterCapacity: null,
+      filterTeam: null,
+      error: null,
+    });
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `odarez-export-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleClear = () => {
+    if (confirm('Tüm veriler kalıcı olarak silinecek. Emin misiniz?')) {
+      clearStorage();
+      props.actions.resetData();
+    }
+  };
+
   return (
     <>
       {/* Shared Component: SideNavBar */}
@@ -29,26 +74,26 @@ export function Ayarlar(props: AyarlarProps) {
       {/* Main Navigation */}
       <nav className="flex-1 flex flex-col gap-1 px-2">
       {/* Inactive Tabs */}
-      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 rounded-lg transition-colors duration-200 cursor-pointer" href="#">
+      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 rounded-lg transition-colors duration-200 cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('dashboard'); }}>
       <span className="material-symbols-outlined mr-3 text-[20px]" data-icon="dashboard">dashboard</span>
                       Panel
                   </a>
-      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 rounded-lg transition-colors duration-200 cursor-pointer" href="#">
+      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 rounded-lg transition-colors duration-200 cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('rooms'); }}>
       <span className="material-symbols-outlined mr-3 text-[20px]" data-icon="meeting_room">meeting_room</span>
                       Odalar
                   </a>
-      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 rounded-lg transition-colors duration-200 cursor-pointer" href="#">
+      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 rounded-lg transition-colors duration-200 cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('calendar'); }}>
       <span className="material-symbols-outlined mr-3 text-[20px]" data-icon="calendar_month">calendar_month</span>
                       Takvim
                   </a>
-      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 rounded-lg transition-colors duration-200 cursor-pointer" href="#">
+      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 rounded-lg transition-colors duration-200 cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('analytics'); }}>
       <span className="material-symbols-outlined mr-3 text-[20px]" data-icon="insert_chart">insert_chart</span>
                       Analiz
                   </a>
       </nav>
       {/* CTA Action */}
       <div className="px-4 mb-6">
-      <button className="w-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center py-2.5 rounded-lg border border-slate-700 transition-colors duration-200 cursor-pointer text-sm font-semibold">
+      <button className="w-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center py-2.5 rounded-lg border border-slate-700 transition-colors duration-200 cursor-pointer text-sm font-semibold" onClick={() => props.actions.navigate('analytics')}>
       <span className="material-symbols-outlined mr-2 text-[18px]">bolt</span>
                       Hızlı Rapor
                   </button>
@@ -56,12 +101,12 @@ export function Ayarlar(props: AyarlarProps) {
       {/* Footer Navigation */}
       <div className="flex flex-col gap-1 px-2">
       {/* ACTIVE TAB: Ayarlar */}
-      <a className="bg-blue-600/10 text-blue-500 border-r-2 border-blue-500 flex items-center px-4 py-3 ml-2 rounded-l-lg cursor-pointer" href="#">
+      <a className="bg-blue-600/10 text-blue-500 border-r-2 border-blue-500 flex items-center px-4 py-3 ml-2 rounded-l-lg cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); }}>
       <span className="material-symbols-outlined mr-3 text-[20px]" data-icon="settings" data-weight="fill">settings</span>
                       Ayarlar
                   </a>
       {/* Inactive Tab */}
-      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 rounded-lg transition-colors duration-200 cursor-pointer" href="#">
+      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 rounded-lg transition-colors duration-200 cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('help'); }}>
       <span className="material-symbols-outlined mr-3 text-[20px]" data-icon="help_outline">help_outline</span>
                       Yardım
                   </a>
@@ -75,7 +120,7 @@ export function Ayarlar(props: AyarlarProps) {
       <div className="flex items-center w-96">
       <div className="relative w-full">
       <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
-      <input className="w-full bg-slate-800/50 border border-slate-700 text-slate-200 rounded-lg pl-10 pr-4 py-1.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm transition-all placeholder:text-slate-500" placeholder="Oda veya misafir ara..." type="text" />
+      <input className="w-full bg-slate-800/50 border border-slate-700 text-slate-200 rounded-lg pl-10 pr-4 py-1.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm transition-all placeholder:text-slate-500" placeholder="Oda veya misafir ara..." type="text" value={localSearch} onChange={handleSearch} />
       </div>
       </div>
       {/* Center: Brand Logo */}
@@ -84,18 +129,18 @@ export function Ayarlar(props: AyarlarProps) {
       </div>
       {/* Right: Actions */}
       <div className="flex items-center gap-4">
-      <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-1.5 px-4 rounded-lg shadow-sm transition-colors duration-150 active:scale-95 flex items-center">
+      <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-1.5 px-4 rounded-lg shadow-sm transition-colors duration-150 active:scale-95 flex items-center" onClick={() => props.actions.navigate('add-reservation')}>
       <span className="material-symbols-outlined mr-1.5 text-[18px]">add</span>
                           Rezervasyon Ekle
                       </button>
       <div className="flex items-center gap-1 border-l border-slate-700 pl-4 ml-2">
-      <button className="p-2 text-slate-400 hover:bg-slate-800/50 hover:text-white rounded-full transition-all duration-150 active:scale-95 flex items-center justify-center">
+      <button className="p-2 text-slate-400 hover:bg-slate-800/50 hover:text-white rounded-full transition-all duration-150 active:scale-95 flex items-center justify-center" aria-label="Bildirimler">
       <span className="material-symbols-outlined text-[22px]" data-icon="notifications">notifications</span>
       </button>
-      <button className="p-2 text-slate-400 hover:bg-slate-800/50 hover:text-white rounded-full transition-all duration-150 active:scale-95 flex items-center justify-center">
+      <button className="p-2 text-slate-400 hover:bg-slate-800/50 hover:text-white rounded-full transition-all duration-150 active:scale-95 flex items-center justify-center" aria-label="Uygulamalar">
       <span className="material-symbols-outlined text-[22px]" data-icon="apps">apps</span>
       </button>
-      <div className="ml-2 w-8 h-8 rounded-full bg-slate-700 border border-slate-600 overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all">
+      <div className="ml-2 w-8 h-8 rounded-full bg-slate-700 border border-slate-600 overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all" onClick={() => props.actions.navigate('profile')}>
       <img alt="Kullanıcı Profili" className="w-full h-full object-cover" data-alt="A professional headshot of a corporate manager, dramatic studio lighting, dark modern background, hyper-realistic, 8k resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfeE_NWEfA9TE4DvB97fI373O6c0HjBVG4nCjDR2Nmz0k4LWCxZ88rtTDaL-nFcC3MS-VLE7zhFpQBAXCOohVYi3i1c3igO7cQItrkG3Jpy9elnBMeYj_Up_-2spIC4rf5uTaFZW7TNq2WMRxyepnlOllylhQ4QoWvufHkEUZdGjCuwVGo3uXUU3OBfnzZ5-yBC-e-IMgNtuDm3vTrptu77Urky-7BnV4_KqIYW0KezyUBHpFKQcKCMfEWummYpmtahxuXBGsbWwc" />
       </div>
       </div>
@@ -129,8 +174,8 @@ export function Ayarlar(props: AyarlarProps) {
       <span className="font-body-sm text-body-sm text-on-surface-variant">Sistemin ana dilini belirler.</span>
       </div>
       <div className="flex p-1 bg-surface-container-lowest border border-outline-variant rounded-lg">
-      <button className="px-4 py-1.5 font-label-sm text-label-sm rounded-md bg-secondary-container text-on-secondary-container shadow-sm transition-all">Türkçe</button>
-      <button className="px-4 py-1.5 font-label-sm text-label-sm rounded-md text-on-surface-variant hover:text-on-surface transition-all">English</button>
+      <button className={`px-4 py-1.5 font-label-sm text-label-sm rounded-md shadow-sm transition-all ${props.settings.language === 'tr' ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface-variant hover:text-on-surface'}`} onClick={() => props.actions.updateSettings({ language: 'tr' })}>Türkçe</button>
+      <button className={`px-4 py-1.5 font-label-sm text-label-sm rounded-md transition-all ${props.settings.language === 'en' ? 'bg-secondary-container text-on-secondary-container shadow-sm' : 'text-on-surface-variant hover:text-on-surface'}`} onClick={() => props.actions.updateSettings({ language: 'en' })}>English</button>
       </div>
       </div>
       {/* Option: Dark Mode Toggle */}
@@ -140,8 +185,8 @@ export function Ayarlar(props: AyarlarProps) {
       <span className="font-body-sm text-body-sm text-on-surface-variant">Göz yorgunluğunu azaltan karanlık tema.</span>
       </div>
       {/* Toggle Switch UI */}
-      <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background">
-      <span className="inline-block h-4 w-4 translate-x-6 rounded-full bg-on-primary transition-transform"></span>
+      <button className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${props.settings.darkMode ? 'bg-primary' : 'bg-slate-600'}`} onClick={() => props.actions.updateSettings({ darkMode: !props.settings.darkMode })}>
+      <span className={`inline-block h-4 w-4 rounded-full bg-on-primary transition-transform ${props.settings.darkMode ? 'translate-x-6' : 'translate-x-1'}`}></span>
       </button>
       </div>
       </div>
@@ -165,7 +210,7 @@ export function Ayarlar(props: AyarlarProps) {
       <label className="font-label-md text-label-md text-on-surface block mb-1">Yedekleme &amp; Aktarım</label>
       <span className="font-body-sm text-body-sm text-on-surface-variant">Tüm rezervasyon ve ayar verilerini .json olarak indirin.</span>
       </div>
-      <button className="shrink-0 bg-surface text-primary border border-outline-variant hover:bg-surface-variant hover:border-outline transition-colors font-label-md text-label-md py-2 px-4 rounded-lg flex items-center gap-2 shadow-sm">
+      <button className="shrink-0 bg-surface text-primary border border-outline-variant hover:bg-surface-variant hover:border-outline transition-colors font-label-md text-label-md py-2 px-4 rounded-lg flex items-center gap-2 shadow-sm" onClick={handleExport}>
       <span className="material-symbols-outlined text-[18px]">download</span>
                                       Verileri Dışa Aktar (Export JSON)
                                   </button>
@@ -176,7 +221,7 @@ export function Ayarlar(props: AyarlarProps) {
       <label className="font-label-md text-label-md text-error block mb-1">Tehlikeli Bölge</label>
       <span className="font-body-sm text-body-sm text-on-surface-variant">Sistemdeki tüm kayıtları kalıcı olarak siler. Bu işlem geri alınamaz.</span>
       </div>
-      <button className="shrink-0 bg-error text-on-error hover:bg-error/90 transition-colors font-label-md text-label-md py-2 px-4 rounded-lg flex items-center gap-2 shadow-sm border border-error/50">
+      <button className="shrink-0 bg-error text-on-error hover:bg-error/90 transition-colors font-label-md text-label-md py-2 px-4 rounded-lg flex items-center gap-2 shadow-sm border border-error/50" onClick={handleClear}>
       <span className="material-symbols-outlined text-[18px]">delete_forever</span>
                                       Tüm Verileri Temizle
                                   </button>
