@@ -15,11 +15,25 @@ interface AnaEkranDashboardProps {
   reservations: Reservation[];
   searchQuery: string;
   filterStatus: 'all' | 'available' | 'occupied';
+  filterCapacity: number | null;
+  filterTeam: string | null;
   actions: AppActions;
 }
 
 export function AnaEkranDashboard(props: AnaEkranDashboardProps) {
   const [localSearch, setLocalSearch] = useState(props.searchQuery);
+  const [capacityFilterOpen, setCapacityFilterOpen] = useState(false);
+  const [teamFilterOpen, setTeamFilterOpen] = useState(false);
+
+  const capacityOptions = [null, 4, 6, 8, 10, 12] as (number | null)[];
+  const teamOptions = [null, 'Yönetim Kurulu', 'Yazılım Ekibi', 'Tasarım Ekibi', 'İnsan Kaynakları', 'Pazarlama Ekibi'] as (string | null)[];
+
+  const currentCapacityIndex = capacityOptions.indexOf(props.filterCapacity);
+  const nextCapacity = capacityOptions[(currentCapacityIndex + 1) % capacityOptions.length];
+
+  const currentTeamIndex = teamOptions.indexOf(props.filterTeam);
+  const nextTeam = teamOptions[(currentTeamIndex + 1) % teamOptions.length];
+
   const todayStr = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', weekday: 'long' });
 
   const totalRooms = props.rooms.length;
@@ -46,6 +60,9 @@ export function AnaEkranDashboard(props: AnaEkranDashboardProps) {
   const visibleRooms = props.rooms.filter(r => {
     if (props.filterStatus === 'available') return r.status === 'available';
     if (props.filterStatus === 'occupied') return r.status === 'occupied';
+    return true;
+  }).filter(r => {
+    if (props.filterCapacity != null) return r.capacity >= props.filterCapacity;
     return true;
   }).filter(r => {
     if (!localSearch) return true;
@@ -150,14 +167,14 @@ export function AnaEkranDashboard(props: AnaEkranDashboardProps) {
       <button className={`px-3 py-1.5 text-sm font-medium rounded ${props.filterStatus === 'available' ? 'bg-surface-variant text-on-surface shadow-sm' : 'text-slate-400 hover:text-on-surface transition-colors'}`} onClick={() => props.actions.setFilterStatus('available')}>Boş</button>
       <button className={`px-3 py-1.5 text-sm font-medium rounded ${props.filterStatus === 'occupied' ? 'bg-surface-variant text-on-surface shadow-sm' : 'text-slate-400 hover:text-on-surface transition-colors'}`} onClick={() => props.actions.setFilterStatus('occupied')}>Dolu</button>
       </div>
-      <button className="flex items-center gap-2 px-3 py-2 bg-[#1E293B] border border-[#334155] rounded-lg text-sm font-medium text-on-surface-variant hover:border-slate-500 hover:text-on-surface transition-colors">
+      <button className="flex items-center gap-2 px-3 py-2 bg-[#1E293B] border border-[#334155] rounded-lg text-sm font-medium text-on-surface-variant hover:border-slate-500 hover:text-on-surface transition-colors" onClick={() => { props.actions.setFilterCapacity(nextCapacity); setCapacityFilterOpen(!capacityFilterOpen); }}>
       <span className="material-symbols-outlined text-[18px]">group</span>
-                              Kapasite
+                              Kapasite{props.filterCapacity ? `: ≥${props.filterCapacity}` : ''}
                               <span className="material-symbols-outlined text-[16px]">expand_more</span>
       </button>
-      <button className="flex items-center gap-2 px-3 py-2 bg-[#1E293B] border border-[#334155] rounded-lg text-sm font-medium text-on-surface-variant hover:border-slate-500 hover:text-on-surface transition-colors">
+      <button className="flex items-center gap-2 px-3 py-2 bg-[#1E293B] border border-[#334155] rounded-lg text-sm font-medium text-on-surface-variant hover:border-slate-500 hover:text-on-surface transition-colors" onClick={() => { props.actions.setFilterTeam(nextTeam); setTeamFilterOpen(!teamFilterOpen); }}>
       <span className="material-symbols-outlined text-[18px]">domain</span>
-                              Ekip
+                              Ekip{props.filterTeam ? `: ${props.filterTeam}` : ''}
                               <span className="material-symbols-outlined text-[16px]">expand_more</span>
       </button>
       </div>

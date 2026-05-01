@@ -22,6 +22,8 @@ export default function App() {
           reservations={state.reservations}
           searchQuery={state.searchQuery}
           filterStatus={state.filterStatus}
+          filterCapacity={state.filterCapacity}
+          filterTeam={state.filterTeam}
           actions={actions}
         />
       )}
@@ -84,6 +86,8 @@ export default function App() {
           reservations={state.reservations}
           searchQuery={state.searchQuery}
           filterStatus={state.filterStatus}
+          filterCapacity={state.filterCapacity}
+          filterTeam={state.filterTeam}
           actions={actions}
         />
       )}

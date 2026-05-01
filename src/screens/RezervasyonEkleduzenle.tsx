@@ -41,8 +41,7 @@ export function RezervasyonEkleduzenle(props: RezervasyonEkleduzenleProps) {
   const hasConflict = conflicts.length > 0;
   const isValid = roomId && date && startTime && endTime && title && !hasConflict;
 
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSave = () => {
     if (!isValid) return;
     const payload: Reservation = {
       id: isEdit ? props.reservation!.id : `res-${Date.now()}`,
@@ -97,7 +96,7 @@ export function RezervasyonEkleduzenle(props: RezervasyonEkleduzenleProps) {
       </div>
       </div>
       )}
-      <form className="space-y-lg" onSubmit={handleSave}>
+      <form className="space-y-lg" onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
       {/* Section: Oda & Tarih */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
       {/* Oda Seçimi */}
@@ -152,7 +151,7 @@ export function RezervasyonEkleduzenle(props: RezervasyonEkleduzenleProps) {
       <button className="px-lg py-sm rounded-md border border-[#334155] font-label-md text-label-md text-on-surface hover:bg-[#334155]/50 transition-colors" onClick={handleCancel}>
                           İptal
                       </button>
-      <button className={`px-lg py-sm rounded-md font-label-md text-label-md transition-colors shadow-sm ${isValid ? 'bg-primary text-on-primary hover:bg-primary/90' : 'bg-primary/50 text-on-primary/70 cursor-not-allowed'}`} onClick={handleSave} disabled={!isValid}>
+      <button className={`px-lg py-sm rounded-md font-label-md text-label-md transition-colors shadow-sm ${isValid ? 'bg-primary text-on-primary hover:bg-primary/90' : 'bg-primary/50 text-on-primary/70 cursor-not-allowed'}`} onClick={() => handleSave()} disabled={!isValid} type="button">
                           {isEdit ? 'Güncelle' : 'Kaydet'}
                       </button>
       </div>
