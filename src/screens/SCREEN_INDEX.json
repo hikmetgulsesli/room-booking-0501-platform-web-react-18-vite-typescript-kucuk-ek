@@ -1,0 +1,74 @@
+[
+  {
+    "screenId": "c9c9785b21fe49f3ae29e36b764cc87a",
+    "title": "Rezervasyon Ekle/Düzenle",
+    "componentName": "RezervasyonEkleduzenle",
+    "file": "src/screens/RezervasyonEkleduzenle.tsx",
+    "buttons": 3,
+    "inputs": 5,
+    "links": 0
+  },
+  {
+    "screenId": "6bd65c3e02a7403089d6f1b9a8fd54bc",
+    "title": "Profil Paneli",
+    "componentName": "ProfilPaneli",
+    "file": "src/screens/ProfilPaneli.tsx",
+    "buttons": 2,
+    "inputs": 0,
+    "links": 4
+  },
+  {
+    "screenId": "934be6c10d174861b762ed0686735869",
+    "title": "Rezervasyon Detay",
+    "componentName": "RezervasyonDetay",
+    "file": "src/screens/RezervasyonDetay.tsx",
+    "buttons": 7,
+    "inputs": 1,
+    "links": 7
+  },
+  {
+    "screenId": "c2a1710666664bcea4b281e11ac09948",
+    "title": "Ana Ekran (Dashboard)",
+    "componentName": "AnaEkranDashboard",
+    "file": "src/screens/AnaEkranDashboard.tsx",
+    "buttons": 12,
+    "inputs": 1,
+    "links": 6
+  },
+  {
+    "screenId": "82c96cc06c594d73a66ced3f366eb218",
+    "title": "Boş Durum",
+    "componentName": "BosDurum",
+    "file": "src/screens/BosDurum.tsx",
+    "buttons": 5,
+    "inputs": 1,
+    "links": 6
+  },
+  {
+    "screenId": "f80af37b5a57435382a054a23fc61222",
+    "title": "Hata Durumu",
+    "componentName": "HataDurumu",
+    "file": "src/screens/HataDurumu.tsx",
+    "buttons": 1,
+    "inputs": 0,
+    "links": 1
+  },
+  {
+    "screenId": "df4ad0b6ece54777a90801d7b0defb3c",
+    "title": "İstatistikler",
+    "componentName": "Istatistikler",
+    "file": "src/screens/Istatistikler.tsx",
+    "buttons": 7,
+    "inputs": 1,
+    "links": 6
+  },
+  {
+    "screenId": "a3eb39cd68844960940d44a2364ca7a7",
+    "title": "Ayarlar",
+    "componentName": "Ayarlar",
+    "file": "src/screens/Ayarlar.tsx",
+    "buttons": 9,
+    "inputs": 1,
+    "links": 6
+  }
+]
