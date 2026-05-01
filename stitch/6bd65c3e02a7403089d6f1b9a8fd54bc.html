@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kullanıcı Profili</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "on-secondary-container": "#abb9d1",
+                            "on-primary-fixed-variant": "#003ea8",
+                            "inverse-primary": "#0053db",
+                            "on-tertiary-container": "#ffede6",
+                            "surface-container-lowest": "#0c0e16",
+                            "surface-container-high": "#282a32",
+                            "secondary-container": "#3c4a5e",
+                            "surface": "#11131b",
+                            "surface-dim": "#11131b",
+                            "on-tertiary-fixed": "#360f00",
+                            "primary-fixed": "#dbe1ff",
+                            "surface-tint": "#b4c5ff",
+                            "error-container": "#93000a",
+                            "background": "#11131b",
+                            "inverse-surface": "#e1e2ed",
+                            "primary": "#b4c5ff",
+                            "on-primary": "#002a78",
+                            "on-surface": "#e1e2ed",
+                            "tertiary-fixed": "#ffdbcd",
+                            "surface-bright": "#373942",
+                            "inverse-on-surface": "#2e3039",
+                            "on-secondary-fixed": "#0d1c2e",
+                            "on-tertiary-fixed-variant": "#7d2d00",
+                            "on-secondary": "#233144",
+                            "tertiary-container": "#bc4800",
+                            "on-error-container": "#ffdad6",
+                            "error": "#ffb4ab",
+                            "secondary-fixed-dim": "#b9c7df",
+                            "tertiary-fixed-dim": "#ffb596",
+                            "surface-variant": "#32343d",
+                            "primary-container": "#2563eb",
+                            "surface-container-low": "#191b23",
+                            "on-primary-fixed": "#00174b",
+                            "outline-variant": "#434655",
+                            "on-secondary-fixed-variant": "#3a485b",
+                            "on-surface-variant": "#c3c6d7",
+                            "on-background": "#e1e2ed",
+                            "on-primary-container": "#eeefff",
+                            "primary-fixed-dim": "#b4c5ff",
+                            "outline": "#8d90a0",
+                            "surface-container": "#1d1f27",
+                            "surface-container-highest": "#32343d",
+                            "on-tertiary": "#581e00",
+                            "secondary-fixed": "#d5e3fc",
+                            "tertiary": "#ffb596",
+                            "on-error": "#690005",
+                            "secondary": "#b9c7df"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "2xl": "48px",
+                            "sm": "8px",
+                            "md": "16px",
+                            "margin": "24px",
+                            "unit": "8px",
+                            "lg": "24px",
+                            "xl": "32px",
+                            "gutter": "16px",
+                            "xs": "4px"
+                    },
+                    "fontFamily": {
+                            "h3": ["Inter"],
+                            "label-md": ["Inter"],
+                            "body-md": ["Inter"],
+                            "body-lg": ["Inter"],
+                            "h1": ["Inter"],
+                            "h2": ["Inter"],
+                            "label-sm": ["Inter"],
+                            "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                            "h3": ["20px", { "lineHeight": "1.4", "letterSpacing": "0em", "fontWeight": "600" }],
+                            "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                            "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                            "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                            "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                            "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                            "label-sm": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                            "body-sm": ["14px", { "lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-sans antialiased h-screen overflow-hidden relative selection:bg-primary-container selection:text-on-primary-container">
+<!-- Blurred Background Context (Simulating the underlying app) -->
+<div aria-hidden="true" class="absolute inset-0 bg-background flex p-xl">
+<div class="w-64 h-full bg-surface-container-low rounded-xl border border-surface-container-highest opacity-50 mr-lg"></div>
+<div class="flex-1 h-full bg-surface-container-low rounded-xl border border-surface-container-highest opacity-50"></div>
+</div>
+<!-- Modal Overlay Backdrop -->
+<div class="absolute inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-40 transition-opacity"></div>
+<!-- Side Drawer Panel -->
+<aside aria-labelledby="profile-panel-title" aria-modal="true" class="absolute top-0 right-0 h-full w-full max-w-[420px] bg-surface border-l border-outline-variant z-50 flex flex-col shadow-2xl transition-transform duration-300 ease-in-out transform translate-x-0" role="dialog">
+<!-- Header -->
+<header class="flex items-center justify-between p-lg border-b border-surface-container-highest">
+<h2 class="font-h3 text-h3 text-on-surface" id="profile-panel-title">Profil</h2>
+<button aria-label="Kapat" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto overflow-x-hidden">
+<!-- User Identity Section -->
+<section class="p-lg flex flex-col items-center text-center pb-xl border-b border-surface-container-highest/50">
+<div class="relative group cursor-pointer mb-md">
+<div class="w-24 h-24 rounded-full overflow-hidden border-2 border-surface-container-highest group-hover:border-primary transition-colors">
+<img alt="Kullanıcı Profil Fotoğrafı" class="w-full h-full object-cover" data-alt="A professional corporate headshot of a person in a modern office environment. The lighting is dramatic and moody, utilizing the dark mode aesthetic with deep navy blue and slate gray tones in the background. Subtle cool blue accent lights illuminate the subject's face, conveying a sense of technological efficiency and premium quality. The overall composition is clean, minimalist, and highly polished." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqt2KL16LYwiHV1uy0Pf7vLBO2sYMB0Vgns3e9KjyWNdTof3-ZdYmg-pOcmyF90MhO6Ij8WlpNTan3kokEpbAFi9tdZiUueHXsAqsyTmRzfclYG13eq_qh5vXjae9O4LBeAFAeO6BH8P_WB6_YUCryQaZLCb9jaE4SoCkjPqJd2DvJwkIlY1hUQy_n5Lr9G7zDm3qIHPRaK_2fiGxw7CDAZy_9bSTe9xhkqvNIAefgaeb2eJQYYGmJxuG-lOUyeBl6hilQvLsjlvg"/>
+</div>
+<div class="absolute bottom-0 right-0 w-8 h-8 bg-surface-container-highest border border-outline-variant rounded-full flex items-center justify-center text-on-surface-variant group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</div>
+</div>
+<h1 class="font-h2 text-h2 text-on-surface tracking-tight mb-xs">Ahmet Yılmaz</h1>
+<p class="font-label-md text-label-md text-primary bg-primary/10 px-sm py-xs rounded-full inline-block mb-sm">Sistem Yöneticisi</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px] opacity-70">mail</span>
+                    ahmet.yilmaz@odarez.com
+                </p>
+</section>
+<!-- Account Settings Bento Grid -->
+<section class="p-lg flex flex-col gap-md">
+<h3 class="font-label-sm text-label-sm text-outline uppercase tracking-wider pl-xs">Hesap Ayarları</h3>
+<!-- Card 1: Personal Info -->
+<a class="group flex items-center gap-md p-md rounded-xl bg-surface-container-low border border-surface-container-highest hover:bg-surface-container hover:border-outline-variant transition-all cursor-pointer" href="#">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary border border-surface-container-highest group-hover:border-primary/30 transition-colors">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</div>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Kişisel Bilgiler</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Ad, iletişim ve profil detayları</p>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+<!-- Card 2: Security -->
+<a class="group flex items-center gap-md p-md rounded-xl bg-surface-container-low border border-surface-container-highest hover:bg-surface-container hover:border-outline-variant transition-all cursor-pointer" href="#">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary border border-surface-container-highest group-hover:border-primary/30 transition-colors">
+<span class="material-symbols-outlined text-[20px]">shield_lock</span>
+</div>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Güvenlik ve Şifre</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">2FA ve erişim kontrolleri</p>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+<!-- Card 3: Notifications -->
+<a class="group flex items-center gap-md p-md rounded-xl bg-surface-container-low border border-surface-container-highest hover:bg-surface-container hover:border-outline-variant transition-all cursor-pointer" href="#">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary border border-surface-container-highest group-hover:border-primary/30 transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications_active</span>
+</div>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Bildirim Tercihleri</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">E-posta ve uygulama içi uyarılar</p>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+</section>
+<!-- Preferences Section -->
+<section class="px-lg pb-lg flex flex-col gap-md">
+<h3 class="font-label-sm text-label-sm text-outline uppercase tracking-wider pl-xs">Sistem Tercihleri</h3>
+<a class="group flex items-center gap-md p-md rounded-xl bg-surface-container-low border border-surface-container-highest hover:bg-surface-container hover:border-outline-variant transition-all cursor-pointer" href="#">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-on-surface-variant border border-surface-container-highest group-hover:border-outline-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]">dark_mode</span>
+</div>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-on-surface">Görünüm</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Karanlık Mod (Aktif)</p>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface transition-colors">chevron_right</span>
+</a>
+</section>
+</div>
+<!-- Footer Actions -->
+<footer class="p-lg border-t border-surface-container-highest bg-surface-container-lowest/50 mt-auto">
+<button class="w-full flex items-center justify-center gap-sm px-md py-md rounded-lg bg-surface-variant border border-surface-container-highest text-error hover:bg-error-container hover:border-error-container hover:text-on-error-container transition-all focus:outline-none focus:ring-2 focus:ring-error focus:ring-opacity-50 group">
+<span class="material-symbols-outlined text-[20px] group-hover:-translate-x-1 transition-transform">logout</span>
+<span class="font-label-md text-label-md">Çıkış Yap</span>
+</button>
+<p class="font-body-sm text-body-sm text-center text-outline mt-md">OdaRez Pro v2.4.1</p>
+</footer>
+</aside>
+</body></html>
