@@ -7,7 +7,7 @@
 // 3. Add onClick/onChange handlers to interactive elements
 // 4. Replace placeholder data with props/state
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, type ChangeEvent } from "react";
 import type { Room, Reservation, AppActions } from "../types/domain";
 import { exportData } from "../utils/storage";
 
@@ -22,7 +22,7 @@ export function Istatistikler(props: IstatistiklerProps) {
   const [localSearch, setLocalSearch] = useState(props.searchQuery);
   const [days, setDays] = useState(30);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setLocalSearch(e.target.value);
     props.actions.setSearch(e.target.value);
   };

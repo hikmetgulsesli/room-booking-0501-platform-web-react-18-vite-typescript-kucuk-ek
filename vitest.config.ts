@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-process.env.NODE_ENV = 'development';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
@@ -13,9 +14,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      react: path.resolve(__dirname, 'node_modules/react/index.js'),
-      'react-dom': path.resolve(__dirname, 'node_modules/react-dom/index.js'),
-      'react-dom/test-utils': path.resolve(__dirname, 'node_modules/react-dom/test-utils.js'),
+      react: path.resolve(__dirname, 'node_modules/react/cjs/react.development.js'),
+      'react-dom': path.resolve(__dirname, 'node_modules/react-dom/cjs/react-dom.development.js'),
+      'react-dom/test-utils': path.resolve(__dirname, 'node_modules/react-dom/cjs/react-dom-test-utils.development.js'),
     },
   },
 });

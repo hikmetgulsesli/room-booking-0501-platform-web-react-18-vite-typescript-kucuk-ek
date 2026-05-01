@@ -7,7 +7,7 @@
 // 3. Add onClick/onChange handlers to interactive elements
 // 4. Replace placeholder data with props/state
 
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import type { AppSettings, AppActions } from "../types/domain";
 import { exportData, clearStorage } from "../utils/storage";
 
@@ -20,7 +20,7 @@ interface AyarlarProps {
 export function Ayarlar(props: AyarlarProps) {
   const [localSearch, setLocalSearch] = useState(props.searchQuery);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setLocalSearch(e.target.value);
     props.actions.setSearch(e.target.value);
   };

@@ -7,7 +7,7 @@
 // 3. Add onClick/onChange handlers to interactive elements
 // 4. Replace placeholder data with props/state
 
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import type { Room, Reservation, AppActions } from "../types/domain";
 
 interface AnaEkranDashboardProps {
@@ -22,9 +22,7 @@ interface AnaEkranDashboardProps {
 
 export function AnaEkranDashboard(props: AnaEkranDashboardProps) {
   const [localSearch, setLocalSearch] = useState(props.searchQuery);
-  const [capacityFilterOpen, setCapacityFilterOpen] = useState(false);
-  const [teamFilterOpen, setTeamFilterOpen] = useState(false);
-
+  
   const capacityOptions = [null, 4, 6, 8, 10, 12] as (number | null)[];
   const teamOptions = [null, 'Yönetim Kurulu', 'Yazılım Ekibi', 'Tasarım Ekibi', 'İnsan Kaynakları', 'Pazarlama Ekibi'] as (string | null)[];
 
@@ -44,7 +42,7 @@ export function AnaEkranDashboard(props: AnaEkranDashboardProps) {
   const todayIso = new Date().toISOString().split('T')[0];
   const todayReservations = props.reservations.filter(r => r.date === todayIso && r.status !== 'cancelled');
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setLocalSearch(e.target.value);
     props.actions.setSearch(e.target.value);
   };
@@ -62,6 +60,15 @@ export function AnaEkranDashboard(props: AnaEkranDashboardProps) {
     if (props.filterStatus === 'occupied') return r.status === 'occupied';
     return true;
   }).filter(r => {
+    // Apply team filter if set
+    if (props.filterTeam) {
+      const todayIsoStr = new Date().toISOString().split('T')[0];
+      const hasTeamReservation = props.reservations.some(res =>
+        res.roomId === r.id && res.team === props.filterTeam &&
+        res.date === todayIsoStr && res.status !== 'cancelled'
+      );
+      if (!hasTeamReservation) return false;
+    }
     if (props.filterCapacity != null) return r.capacity >= props.filterCapacity;
     return true;
   }).filter(r => {
@@ -167,12 +174,12 @@ export function AnaEkranDashboard(props: AnaEkranDashboardProps) {
       <button className={`px-3 py-1.5 text-sm font-medium rounded ${props.filterStatus === 'available' ? 'bg-surface-variant text-on-surface shadow-sm' : 'text-slate-400 hover:text-on-surface transition-colors'}`} onClick={() => props.actions.setFilterStatus('available')}>Boş</button>
       <button className={`px-3 py-1.5 text-sm font-medium rounded ${props.filterStatus === 'occupied' ? 'bg-surface-variant text-on-surface shadow-sm' : 'text-slate-400 hover:text-on-surface transition-colors'}`} onClick={() => props.actions.setFilterStatus('occupied')}>Dolu</button>
       </div>
-      <button className="flex items-center gap-2 px-3 py-2 bg-[#1E293B] border border-[#334155] rounded-lg text-sm font-medium text-on-surface-variant hover:border-slate-500 hover:text-on-surface transition-colors" onClick={() => { props.actions.setFilterCapacity(nextCapacity); setCapacityFilterOpen(!capacityFilterOpen); }}>
+      <button className="flex items-center gap-2 px-3 py-2 bg-[#1E293B] border border-[#334155] rounded-lg text-sm font-medium text-on-surface-variant hover:border-slate-500 hover:text-on-surface transition-colors" onClick={() => { props.actions.setFilterCapacity(nextCapacity); }}>
       <span className="material-symbols-outlined text-[18px]">group</span>
                               Kapasite{props.filterCapacity ? `: ≥${props.filterCapacity}` : ''}
                               <span className="material-symbols-outlined text-[16px]">expand_more</span>
       </button>
-      <button className="flex items-center gap-2 px-3 py-2 bg-[#1E293B] border border-[#334155] rounded-lg text-sm font-medium text-on-surface-variant hover:border-slate-500 hover:text-on-surface transition-colors" onClick={() => { props.actions.setFilterTeam(nextTeam); setTeamFilterOpen(!teamFilterOpen); }}>
+      <button className="flex items-center gap-2 px-3 py-2 bg-[#1E293B] border border-[#334155] rounded-lg text-sm font-medium text-on-surface-variant hover:border-slate-500 hover:text-on-surface transition-colors" onClick={() => { props.actions.setFilterTeam(nextTeam); }}>
       <span className="material-symbols-outlined text-[18px]">domain</span>
                               Ekip{props.filterTeam ? `: ${props.filterTeam}` : ''}
                               <span className="material-symbols-outlined text-[16px]">expand_more</span>

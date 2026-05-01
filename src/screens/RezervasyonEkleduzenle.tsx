@@ -39,7 +39,7 @@ export function RezervasyonEkleduzenle(props: RezervasyonEkleduzenleProps) {
   }, [roomId, date, startTime, endTime, props.reservations, isEdit, props.reservation]);
 
   const hasConflict = conflicts.length > 0;
-  const isValid = roomId && date && startTime && endTime && title && !hasConflict;
+  const isValid = roomId && date && startTime && endTime && title && !hasConflict && endTime > startTime;
 
   const handleSave = () => {
     if (!isValid) return;
@@ -53,7 +53,7 @@ export function RezervasyonEkleduzenle(props: RezervasyonEkleduzenleProps) {
       endTime,
       organizer: isEdit ? props.reservation!.organizer : 'Ahmet Yılmaz',
       attendees: isEdit ? props.reservation!.attendees : [],
-      description: title,
+      description: isEdit ? (props.reservation!.description || title) : title,
       status: 'approved',
       createdAt: isEdit ? props.reservation!.createdAt : new Date().toISOString(),
     };

@@ -7,7 +7,7 @@
 // 3. Add onClick/onChange handlers to interactive elements
 // 4. Replace placeholder data with props/state
 
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import type { Room, Reservation, AppActions } from "../types/domain";
 
 interface RezervasyonDetayProps {
@@ -21,7 +21,7 @@ export function RezervasyonDetay(props: RezervasyonDetayProps) {
   const [localSearch, setLocalSearch] = useState(props.searchQuery);
   const r = props.reservation;
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setLocalSearch(e.target.value);
     props.actions.setSearch(e.target.value);
   };
