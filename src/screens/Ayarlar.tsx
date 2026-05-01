@@ -101,7 +101,7 @@ export function Ayarlar(props: AyarlarProps) {
       {/* Footer Navigation */}
       <div className="flex flex-col gap-1 px-2">
       {/* ACTIVE TAB: Ayarlar */}
-      <a className="bg-blue-600/10 text-blue-500 border-r-2 border-blue-500 flex items-center px-4 py-3 ml-2 rounded-l-lg cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); }}>
+      <a className="bg-blue-600/10 text-blue-500 border-r-2 border-blue-500 flex items-center px-4 py-3 ml-2 rounded-l-lg cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('settings'); }}>
       <span className="material-symbols-outlined mr-3 text-[20px]" data-icon="settings" data-weight="fill">settings</span>
                       Ayarlar
                   </a>

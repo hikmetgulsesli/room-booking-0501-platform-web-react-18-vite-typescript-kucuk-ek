@@ -7,7 +7,7 @@
 // 3. Add onClick/onChange handlers to interactive elements
 // 4. Replace placeholder data with props/state
 
-import { useState, useMemo, type ChangeEvent } from "react";
+import { useState, useMemo, useEffect, type ChangeEvent } from "react";
 import type { Room, Reservation, AppActions } from "../types/domain";
 import { exportData } from "../utils/storage";
 
@@ -21,6 +21,19 @@ interface IstatistiklerProps {
 export function Istatistikler(props: IstatistiklerProps) {
   const [localSearch, setLocalSearch] = useState(props.searchQuery);
   const [days, setDays] = useState(30);
+  const [showRoomOptions, setShowRoomOptions] = useState(false);
+
+  useEffect(() => {
+    if (!showRoomOptions) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.room-options-dropdown')) {
+        setShowRoomOptions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showRoomOptions]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setLocalSearch(e.target.value);
@@ -127,7 +140,7 @@ export function Istatistikler(props: IstatistiklerProps) {
                   </a>
       {/* Active Tab 4: Analiz (Intent maps perfectly to Statistics/Insights Dashboard) */}
       {/* Applying style_active_navigation strictly */}
-      <a className="bg-blue-600/10 text-blue-500 border-r-2 border-blue-500 flex items-center px-4 py-3 ml-2 rounded-l-lg cursor-pointer text-sm font-medium Inter" href="#" onClick={(e) => { e.preventDefault(); }}>
+      <a className="bg-blue-600/10 text-blue-500 border-r-2 border-blue-500 flex items-center px-4 py-3 ml-2 rounded-l-lg cursor-pointer text-sm font-medium Inter" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('analytics'); }}>
       <span className="material-symbols-outlined mr-3 icon-fill">insert_chart</span>
                       Analiz
                   </a>
@@ -263,9 +276,21 @@ export function Istatistikler(props: IstatistiklerProps) {
       <div className="lg:col-span-2 bg-surface-container rounded-xl border border-outline-variant/30 p-lg flex flex-col gap-md shadow-sm">
       <div className="flex justify-between items-center">
       <h3 className="font-h3 text-h3 text-on-surface">En Çok Kullanılan Odalar</h3>
-      <button className="text-on-surface-variant hover:text-primary transition-colors" aria-label="Daha fazla">
+      <div className="relative">
+      <button className="text-on-surface-variant hover:text-primary transition-colors" aria-label="Daha fazla" onClick={() => setShowRoomOptions(!showRoomOptions)}>
       <span className="material-symbols-outlined">more_horiz</span>
       </button>
+      {showRoomOptions && (
+        <div className="absolute right-0 top-8 bg-surface-container room-options-dropdown border border-outline-variant rounded-lg shadow-lg z-10 min-w-[180px] py-1">
+          <button className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-high transition-colors" onClick={() => { setShowRoomOptions(false); props.actions.navigate('rooms'); }}>
+            Oda Listesine Git
+          </button>
+          <button className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-high transition-colors" onClick={() => { setShowRoomOptions(false); handleExport(); }}>
+            Raporu İndir
+          </button>
+        </div>
+      )}
+      </div>
       </div>
       <div className="flex-1 flex flex-col justify-center gap-6 mt-4">
       {roomUsage.map(room => (
