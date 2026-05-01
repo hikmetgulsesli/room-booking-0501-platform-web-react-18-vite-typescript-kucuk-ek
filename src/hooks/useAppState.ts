@@ -1,5 +1,5 @@
 import { useReducer, useEffect, useCallback } from 'react';
-import type { AppState, View, Room, Reservation, AppSettings } from '../types/domain';
+import type { AppState, View, Room, Reservation, AppSettings, AppActions } from '../types/domain';
 import { createInitialState } from '../types/domain';
 import { loadState, saveState } from '../utils/storage';
 
@@ -97,24 +97,6 @@ function reducer(state: AppState, action: Action): AppState {
     default:
       return state;
   }
-}
-
-export interface AppActions {
-  navigate: (view: View) => void;
-  goBack: () => void;
-  setSearch: (query: string) => void;
-  setFilterStatus: (status: AppState['filterStatus']) => void;
-  setFilterCapacity: (capacity: number | null) => void;
-  setFilterTeam: (team: string | null) => void;
-  selectReservation: (id: string | null) => void;
-  selectRoom: (id: string | null) => void;
-  addReservation: (reservation: Reservation) => void;
-  updateReservation: (reservation: Reservation) => void;
-  deleteReservation: (id: string) => void;
-  updateRoom: (room: Room) => void;
-  updateSettings: (settings: Partial<AppSettings>) => void;
-  setError: (error: string | null) => void;
-  resetData: () => void;
 }
 
 export function useAppState(): { state: AppState; actions: AppActions } {

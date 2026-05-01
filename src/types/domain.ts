@@ -220,3 +220,21 @@ export function createInitialState(): AppState {
     error: null,
   };
 }
+
+export interface AppActions {
+  navigate: (view: View) => void;
+  goBack: () => void;
+  setSearch: (query: string) => void;
+  setFilterStatus: (status: AppState['filterStatus']) => void;
+  setFilterCapacity: (capacity: number | null) => void;
+  setFilterTeam: (team: string | null) => void;
+  selectReservation: (id: string | null) => void;
+  selectRoom: (id: string | null) => void;
+  addReservation: (reservation: Reservation) => void;
+  updateReservation: (reservation: Reservation) => void;
+  deleteReservation: (id: string) => void;
+  updateRoom: (room: Room) => void;
+  updateSettings: (settings: Partial<AppSettings>) => void;
+  setError: (error: string | null) => void;
+  resetData: () => void;
+}
