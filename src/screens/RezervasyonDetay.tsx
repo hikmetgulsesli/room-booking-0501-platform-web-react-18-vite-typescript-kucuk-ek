@@ -200,8 +200,8 @@ export function RezervasyonDetay(props: RezervasyonDetayProps) {
       <div className="flex items-center justify-between mb-md">
       <h2 className="font-h3 text-h3 text-on-surface">Katılımcılar <span className="text-on-surface-variant font-normal">({r.attendees.length})</span></h2>
       <button className="text-primary hover:text-primary-fixed transition-colors font-label-sm text-label-sm flex items-center gap-1" onClick={() => {
-        const emails = r.attendees.map(a => a.name.toLowerCase().replace(/\s+/g, '.') + '@odarez.com').join(',');
-        window.open(`mailto:${emails}?subject=${encodeURIComponent(r.title)}`, '_blank');
+        const emails = r.attendees.map(a => a.email || (a.name.toLowerCase().replace(/\s+/g, '.') + '@odarez.com')).join(',');
+        window.location.href = `mailto:${emails}?subject=${encodeURIComponent(r.title)}`;
       }}>
       <span className="material-symbols-outlined text-[16px]">mail</span>
                                       Tümüne E-posta Gönder

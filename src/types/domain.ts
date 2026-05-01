@@ -29,6 +29,7 @@ export interface Attendee {
   avatar?: string;
   initials?: string;
   status: 'accepted' | 'pending' | 'declined';
+  email?: string;
 }
 
 export interface User {

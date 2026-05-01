@@ -7,7 +7,7 @@
 // 3. Add onClick/onChange handlers to interactive elements
 // 4. Replace placeholder data with props/state
 
-import { useState, useMemo, type ChangeEvent } from "react";
+import { useState, useMemo, useEffect, type ChangeEvent } from "react";
 import type { Room, Reservation, AppActions } from "../types/domain";
 import { exportData } from "../utils/storage";
 
@@ -22,6 +22,18 @@ export function Istatistikler(props: IstatistiklerProps) {
   const [localSearch, setLocalSearch] = useState(props.searchQuery);
   const [days, setDays] = useState(30);
   const [showRoomOptions, setShowRoomOptions] = useState(false);
+
+  useEffect(() => {
+    if (!showRoomOptions) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.room-options-dropdown')) {
+        setShowRoomOptions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showRoomOptions]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setLocalSearch(e.target.value);
@@ -269,7 +281,7 @@ export function Istatistikler(props: IstatistiklerProps) {
       <span className="material-symbols-outlined">more_horiz</span>
       </button>
       {showRoomOptions && (
-        <div className="absolute right-0 top-8 bg-surface-container border border-outline-variant rounded-lg shadow-lg z-10 min-w-[180px] py-1">
+        <div className="absolute right-0 top-8 bg-surface-container room-options-dropdown border border-outline-variant rounded-lg shadow-lg z-10 min-w-[180px] py-1">
           <button className="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-container-high transition-colors" onClick={() => { setShowRoomOptions(false); props.actions.navigate('rooms'); }}>
             Oda Listesine Git
           </button>
