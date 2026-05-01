@@ -7,11 +7,92 @@
 // 3. Add onClick/onChange handlers to interactive elements
 // 4. Replace placeholder data with props/state
 
-import { useState } from "react";
+import { useState, useMemo, type ChangeEvent } from "react";
+import type { Room, Reservation, AppActions } from "../types/domain";
+import { exportData } from "../utils/storage";
 
-interface IstatistiklerProps {}
+interface IstatistiklerProps {
+  rooms: Room[];
+  reservations: Reservation[];
+  searchQuery: string;
+  actions: AppActions;
+}
 
 export function Istatistikler(props: IstatistiklerProps) {
+  const [localSearch, setLocalSearch] = useState(props.searchQuery);
+  const [days, setDays] = useState(30);
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setLocalSearch(e.target.value);
+    props.actions.setSearch(e.target.value);
+  };
+
+  const stats = useMemo(() => {
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - days);
+    const recent = props.reservations.filter(r => new Date(r.date) >= cutoff && r.status !== 'cancelled');
+    const totalRes = recent.length;
+    const totalHours = recent.reduce((sum, r) => {
+      const [sh, sm] = r.startTime.split(':').map(Number);
+      const [eh, em] = r.endTime.split(':').map(Number);
+      return sum + (eh * 60 + em - sh * 60 - sm) / 60;
+    }, 0);
+    const cancelled = props.reservations.filter(r => r.status === 'cancelled').length;
+    const cancelRate = props.reservations.length > 0 ? ((cancelled / props.reservations.length) * 100).toFixed(1) : '0.0';
+    return { totalRes, totalHours: Math.round(totalHours), cancelRate };
+  }, [props.reservations, days]);
+
+  const roomUsage = useMemo(() => {
+    const map = new Map<string, { count: number; hours: number }>();
+    props.rooms.forEach(r => map.set(r.id, { count: 0, hours: 0 }));
+    props.reservations.filter(r => r.status !== 'cancelled').forEach(r => {
+      const existing = map.get(r.roomId) || { count: 0, hours: 0 };
+      const [sh, sm] = r.startTime.split(':').map(Number);
+      const [eh, em] = r.endTime.split(':').map(Number);
+      const h = (eh * 60 + em - sh * 60 - sm) / 60;
+      map.set(r.roomId, { count: existing.count + 1, hours: existing.hours + h });
+    });
+    const arr = Array.from(map.entries())
+      .map(([id, v]) => ({ id, name: props.rooms.find(r => r.id === id)?.name || id, ...v }))
+      .sort((a, b) => b.count - a.count);
+    const max = Math.max(...arr.map(a => a.count), 1);
+    return arr.map(a => ({ ...a, pct: Math.round((a.count / max) * 100) }));
+  }, [props.reservations, props.rooms]);
+
+  const teamDist = useMemo(() => {
+    const map = new Map<string, number>();
+    props.reservations.filter(r => r.status !== 'cancelled').forEach(r => {
+      map.set(r.team, (map.get(r.team) || 0) + 1);
+    });
+    const total = Array.from(map.values()).reduce((a, b) => a + b, 0) || 1;
+    return Array.from(map.entries()).map(([team, count]) => ({ team, pct: Math.round((count / total) * 100) }));
+  }, [props.reservations]);
+
+  const handleExport = () => {
+    const data = exportData({
+      view: 'analytics',
+      previousView: null,
+      rooms: props.rooms,
+      reservations: props.reservations,
+      user: { id: '', name: '', email: '', role: '', department: '' },
+      settings: { language: 'tr', darkMode: true },
+      searchQuery: '',
+      selectedReservationId: null,
+      selectedRoomId: null,
+      filterStatus: 'all',
+      filterCapacity: null,
+      filterTeam: null,
+      error: null,
+    });
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `odarez-analytics-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <>
       {/* SideNavBar Component (Generated from JSON) */}
@@ -30,39 +111,39 @@ export function Istatistikler(props: IstatistiklerProps) {
       {/* Primary Navigation */}
       <nav className="flex-1 overflow-y-auto px-2 space-y-1">
       {/* Inactive Tab 1 */}
-      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 hover:bg-slate-800 transition-colors duration-200 cursor-pointer rounded-lg text-sm font-medium Inter group" href="#">
+      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 hover:bg-slate-800 transition-colors duration-200 cursor-pointer rounded-lg text-sm font-medium Inter group" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('dashboard'); }}>
       <span className="material-symbols-outlined mr-3 group-hover:text-blue-500 transition-colors">dashboard</span>
                       Panel
                   </a>
       {/* Inactive Tab 2 */}
-      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 hover:bg-slate-800 transition-colors duration-200 cursor-pointer rounded-lg text-sm font-medium Inter group" href="#">
+      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 hover:bg-slate-800 transition-colors duration-200 cursor-pointer rounded-lg text-sm font-medium Inter group" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('rooms'); }}>
       <span className="material-symbols-outlined mr-3 group-hover:text-blue-500 transition-colors">meeting_room</span>
                       Odalar
                   </a>
       {/* Inactive Tab 3 */}
-      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 hover:bg-slate-800 transition-colors duration-200 cursor-pointer rounded-lg text-sm font-medium Inter group" href="#">
+      <a className="text-slate-400 flex items-center px-4 py-3 hover:bg-slate-800/40 hover:bg-slate-800 transition-colors duration-200 cursor-pointer rounded-lg text-sm font-medium Inter group" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('calendar'); }}>
       <span className="material-symbols-outlined mr-3 group-hover:text-blue-500 transition-colors">calendar_month</span>
                       Takvim
                   </a>
       {/* Active Tab 4: Analiz (Intent maps perfectly to Statistics/Insights Dashboard) */}
       {/* Applying style_active_navigation strictly */}
-      <a className="bg-blue-600/10 text-blue-500 border-r-2 border-blue-500 flex items-center px-4 py-3 ml-2 rounded-l-lg cursor-pointer text-sm font-medium Inter" href="#">
+      <a className="bg-blue-600/10 text-blue-500 border-r-2 border-blue-500 flex items-center px-4 py-3 ml-2 rounded-l-lg cursor-pointer text-sm font-medium Inter" href="#" onClick={(e) => { e.preventDefault(); }}>
       <span className="material-symbols-outlined mr-3 icon-fill">insert_chart</span>
                       Analiz
                   </a>
       </nav>
       {/* Footer / Secondary Navigation */}
       <div className="px-4 mt-auto space-y-4">
-      <button className="w-full flex justify-center items-center py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition-colors duration-200 shadow-md">
+      <button className="w-full flex justify-center items-center py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition-colors duration-200 shadow-md" onClick={() => props.actions.navigate('analytics')}>
       <span className="material-symbols-outlined mr-2 text-sm">bolt</span>
                       Hızlı Rapor
                   </button>
       <div className="space-y-1 pt-4 border-t border-slate-800">
-      <a className="text-slate-400 flex items-center px-4 py-2.5 hover:bg-slate-800/40 transition-colors duration-200 cursor-pointer rounded-lg text-sm font-medium Inter group" href="#">
+      <a className="text-slate-400 flex items-center px-4 py-2.5 hover:bg-slate-800/40 transition-colors duration-200 cursor-pointer rounded-lg text-sm font-medium Inter group" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('settings'); }}>
       <span className="material-symbols-outlined mr-3 text-[20px]">settings</span>
                           Ayarlar
                       </a>
-      <a className="text-slate-400 flex items-center px-4 py-2.5 hover:bg-slate-800/40 transition-colors duration-200 cursor-pointer rounded-lg text-sm font-medium Inter group" href="#">
+      <a className="text-slate-400 flex items-center px-4 py-2.5 hover:bg-slate-800/40 transition-colors duration-200 cursor-pointer rounded-lg text-sm font-medium Inter group" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('help'); }}>
       <span className="material-symbols-outlined mr-3 text-[20px]">help_outline</span>
                           Yardım
                       </a>
@@ -80,28 +161,28 @@ export function Istatistikler(props: IstatistiklerProps) {
       {/* Search Bar (on_left as per JSON) */}
       <div className="relative hidden md:flex items-center">
       <span className="material-symbols-outlined absolute left-3 text-slate-400 text-[18px]">search</span>
-      <input className="pl-10 pr-4 py-1.5 bg-slate-800/50 border border-slate-700 rounded-full text-sm text-slate-200 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 w-64 transition-all" placeholder="Oda, ekip veya rezervasyon ara..." type="text" />
+      <input className="pl-10 pr-4 py-1.5 bg-slate-800/50 border border-slate-700 rounded-full text-sm text-slate-200 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 w-64 transition-all" placeholder="Oda, ekip veya rezervasyon ara..." type="text" value={localSearch} onChange={handleSearch} />
       </div>
       </div>
       {/* Right Area: Actions */}
       <div className="flex items-center gap-4">
       {/* Trailing Primary Action */}
-      <button className="hidden sm:flex items-center gap-2 px-4 py-1.5 bg-blue-600/10 text-blue-600 dark:text-blue-500 hover:bg-blue-600/20 rounded-full font-sans antialiased font-semibold text-sm active:scale-95 duration-150 transition-all">
+      <button className="hidden sm:flex items-center gap-2 px-4 py-1.5 bg-blue-600/10 text-blue-600 dark:text-blue-500 hover:bg-blue-600/20 rounded-full font-sans antialiased font-semibold text-sm active:scale-95 duration-150 transition-all" onClick={() => props.actions.navigate('add-reservation')}>
       <span className="material-symbols-outlined text-[18px]">add</span>
                           Rezervasyon Ekle
                       </button>
       {/* Trailing Icon Actions */}
       <div className="flex items-center gap-1 border-l border-slate-800 pl-4 ml-2">
-      <button className="p-2 text-slate-400 hover:bg-slate-800/50 hover:text-white transition-all active:scale-95 duration-150 rounded-full relative">
+      <button className="p-2 text-slate-400 hover:bg-slate-800/50 hover:text-white transition-all active:scale-95 duration-150 rounded-full relative" aria-label="Bildirimler">
       <span className="material-symbols-outlined">notifications</span>
       <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-slate-900"></span>
       </button>
-      <button className="p-2 text-slate-400 hover:bg-slate-800/50 hover:text-white transition-all active:scale-95 duration-150 rounded-full">
+      <button className="p-2 text-slate-400 hover:bg-slate-800/50 hover:text-white transition-all active:scale-95 duration-150 rounded-full" aria-label="Uygulamalar">
       <span className="material-symbols-outlined">apps</span>
       </button>
       </div>
       {/* Profile Image */}
-      <div className="ml-2">
+      <div className="ml-2" onClick={() => props.actions.navigate('profile')}>
       <img alt="Kullanıcı Profili" className="w-8 h-8 rounded-full border border-slate-700 cursor-pointer hover:border-slate-500 transition-colors" data-alt="A highly professional portrait photo of a man in his late 30s with a neat beard, wearing a dark navy corporate suit. The lighting is studio quality, soft and illuminating, casting subtle shadows that highlight a confident expression. The background is a muted, abstract dark slate color, complementing a dark-mode UI aesthetic perfectly." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo8S6Y3h02bgvjsMEgXfxadjyfcn8SXQmPLuhw_zNPq90o_n6P4Vz9pGcWmQBF1SGTdW9KHSqrY_Fp0TSeN2Z0M3ImFpykFLE_LgusX_p0kCJAu0VjdD_uMdMdrJszoPiJeFWlM08senpVOvep0Ieg6bJhzxwb7iKMwjY_v6bkYberLJ8EA1uKYkIo4n4aKeGk_YvVLdD3TLvsc5FAeZ5M5zDlQfbt2FdBp_iD0Wf2pSMmKJ5SSkqC0jCQq5vRRmFahLALAayq6Jo" />
       </div>
       </div>
@@ -118,11 +199,11 @@ export function Istatistikler(props: IstatistiklerProps) {
       <div className="flex items-center bg-surface-container rounded-lg p-1 border border-outline-variant/50 shadow-sm">
       <button className="px-md py-sm rounded-md bg-surface text-on-surface font-label-sm text-label-sm flex items-center gap-2 shadow-sm border border-outline-variant/30">
       <span className="material-symbols-outlined text-[18px] text-on-surface-variant">calendar_today</span>
-                              Son 30 Gün
+                              Son {days} Gün
                               <span className="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
       </button>
       <div className="w-px h-4 bg-outline-variant/50 mx-2"></div>
-      <button className="px-sm py-sm rounded-md text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors group" title="Dışa Aktar">
+      <button className="px-sm py-sm rounded-md text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors group" title="Dışa Aktar" onClick={handleExport}>
       <span className="material-symbols-outlined text-[20px]">download</span>
       </button>
       </div>
@@ -139,7 +220,7 @@ export function Istatistikler(props: IstatistiklerProps) {
       </div>
       </div>
       <div className="flex items-baseline gap-2 z-10 mt-1">
-      <span className="font-h1 text-h1 text-on-background">842</span>
+      <span className="font-h1 text-h1 text-on-background">{stats.totalRes}</span>
       <span className="font-label-sm text-label-sm text-emerald-400 flex items-center bg-emerald-400/10 px-1.5 py-0.5 rounded">
       <span className="material-symbols-outlined text-[14px]">trending_up</span> 12%
                               </span>
@@ -155,7 +236,7 @@ export function Istatistikler(props: IstatistiklerProps) {
       </div>
       </div>
       <div className="flex items-baseline gap-2 z-10 mt-1">
-      <span className="font-h1 text-h1 text-on-background">1,240</span>
+      <span className="font-h1 text-h1 text-on-background">{stats.totalHours}</span>
       <span className="font-body-sm text-body-sm text-on-surface-variant">Saat</span>
       </div>
       </div>
@@ -169,7 +250,7 @@ export function Istatistikler(props: IstatistiklerProps) {
       </div>
       </div>
       <div className="flex items-baseline gap-2 z-10 mt-1">
-      <span className="font-h1 text-h1 text-on-background">%4.2</span>
+      <span className="font-h1 text-h1 text-on-background">%{stats.cancelRate}</span>
       <span className="font-label-sm text-label-sm text-error flex items-center bg-error/10 px-1.5 py-0.5 rounded">
       <span className="material-symbols-outlined text-[14px]">trending_up</span> 1.1%
                               </span>
@@ -182,53 +263,25 @@ export function Istatistikler(props: IstatistiklerProps) {
       <div className="lg:col-span-2 bg-surface-container rounded-xl border border-outline-variant/30 p-lg flex flex-col gap-md shadow-sm">
       <div className="flex justify-between items-center">
       <h3 className="font-h3 text-h3 text-on-surface">En Çok Kullanılan Odalar</h3>
-      <button className="text-on-surface-variant hover:text-primary transition-colors">
+      <button className="text-on-surface-variant hover:text-primary transition-colors" aria-label="Daha fazla">
       <span className="material-symbols-outlined">more_horiz</span>
       </button>
       </div>
       <div className="flex-1 flex flex-col justify-center gap-6 mt-4">
-      {/* Bar Item 1 */}
-      <div>
+      {roomUsage.map(room => (
+      <div key={room.id}>
       <div className="flex justify-between font-label-md text-label-md mb-2">
-      <span className="text-on-background">Konferans Salonu A</span>
-      <span className="text-on-surface-variant">142 Rez. (320s)</span>
+      <span className="text-on-background">{room.name}</span>
+      <span className="text-on-surface-variant">{room.count} Rez. ({Math.round(room.hours)}s)</span>
       </div>
       <div className="h-3 w-full bg-surface-variant rounded-full overflow-hidden">
-      <div className="h-full bg-primary rounded-full relative" style={{width: "85%"}}>
+      <div className="h-full bg-primary rounded-full relative" style={{width: `${room.pct}%`}}>
       <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/20"></div>
       </div>
       </div>
       </div>
-      {/* Bar Item 2 */}
-      <div>
-      <div className="flex justify-between font-label-md text-label-md mb-2">
-      <span className="text-on-background">Boardroom (Kat 4)</span>
-      <span className="text-on-surface-variant">98 Rez. (215s)</span>
-      </div>
-      <div className="h-3 w-full bg-surface-variant rounded-full overflow-hidden">
-      <div className="h-full bg-primary/80 rounded-full" style={{width: "65%"}}></div>
-      </div>
-      </div>
-      {/* Bar Item 3 */}
-      <div>
-      <div className="flex justify-between font-label-md text-label-md mb-2">
-      <span className="text-on-background">Focus Room B</span>
-      <span className="text-on-surface-variant">84 Rez. (110s)</span>
-      </div>
-      <div className="h-3 w-full bg-surface-variant rounded-full overflow-hidden">
-      <div className="h-full bg-primary/60 rounded-full" style={{width: "45%"}}></div>
-      </div>
-      </div>
-      {/* Bar Item 4 */}
-      <div>
-      <div className="flex justify-between font-label-md text-label-md mb-2">
-      <span className="text-on-background">Proje Odası 2</span>
-      <span className="text-on-surface-variant">45 Rez. (90s)</span>
-      </div>
-      <div className="h-3 w-full bg-surface-variant rounded-full overflow-hidden">
-      <div className="h-full bg-primary/40 rounded-full" style={{width: "25%"}}></div>
-      </div>
-      </div>
+      ))}
+      {roomUsage.length === 0 && <p className="text-sm text-slate-400">Henüz veri bulunmuyor.</p>}
       </div>
       </div>
       {/* Right Column: Ortalama Süre & Ekip Dağılımı */}
@@ -243,7 +296,7 @@ export function Istatistikler(props: IstatistiklerProps) {
       </div>
       <div className="mt-6 z-10 relative">
       <div className="flex items-end gap-2">
-      <span className="text-[48px] font-bold leading-none tracking-tight text-on-background">1.8</span>
+      <span className="text-[48px] font-bold leading-none tracking-tight text-on-background">{stats.totalRes > 0 ? (stats.totalHours / stats.totalRes).toFixed(1) : '0.0'}</span>
       <span className="font-label-md text-label-md text-on-surface-variant mb-2">Saat</span>
       </div>
       {/* Fake Sparkline using flex elements for minimalism */}
@@ -267,30 +320,14 @@ export function Istatistikler(props: IstatistiklerProps) {
       <span className="material-symbols-outlined text-on-surface-variant text-[18px]">pie_chart</span>
       </div>
       <div className="flex-1 flex flex-col justify-center gap-4">
-      {/* Team List Item 1 */}
-      <div className="flex items-center gap-3">
-      <div className="w-3 h-3 rounded-full bg-primary"></div>
-      <span className="font-body-md text-body-md text-on-background flex-1">Yazılım Ekibi</span>
-      <span className="font-label-md text-label-md text-on-surface">%42</span>
+      {teamDist.map((t, i) => (
+      <div className="flex items-center gap-3" key={t.team}>
+      <div className="w-3 h-3 rounded-full" style={{background: ['bg-primary', 'bg-tertiary', 'bg-secondary', 'bg-outline-variant'][i] || '#8d90a0'}}></div>
+      <span className="font-body-md text-body-md text-on-background flex-1">{t.team}</span>
+      <span className="font-label-md text-label-md text-on-surface">%{t.pct}</span>
       </div>
-      {/* Team List Item 2 */}
-      <div className="flex items-center gap-3">
-      <div className="w-3 h-3 rounded-full bg-tertiary"></div>
-      <span className="font-body-md text-body-md text-on-background flex-1">Satış &amp; Pazarlama</span>
-      <span className="font-label-md text-label-md text-on-surface">%28</span>
-      </div>
-      {/* Team List Item 3 */}
-      <div className="flex items-center gap-3">
-      <div className="w-3 h-3 rounded-full bg-secondary"></div>
-      <span className="font-body-md text-body-md text-on-background flex-1">İnsan Kaynakları</span>
-      <span className="font-label-md text-label-md text-on-surface">%18</span>
-      </div>
-      {/* Team List Item 4 */}
-      <div className="flex items-center gap-3">
-      <div className="w-3 h-3 rounded-full bg-outline-variant"></div>
-      <span className="font-body-md text-body-md text-on-background flex-1">Yönetim Kurulu</span>
-      <span className="font-label-md text-label-md text-on-surface">%12</span>
-      </div>
+      ))}
+      {teamDist.length === 0 && <p className="text-sm text-slate-400">Henüz veri bulunmuyor.</p>}
       </div>
       </div>
       </div>

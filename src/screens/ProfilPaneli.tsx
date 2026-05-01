@@ -8,10 +8,17 @@
 // 4. Replace placeholder data with props/state
 
 import { useState } from "react";
+import type { User, AppActions } from "../types/domain";
 
-interface ProfilPaneliProps {}
+interface ProfilPaneliProps {
+  user: User;
+  onClose: () => void;
+  actions: AppActions;
+}
 
 export function ProfilPaneli(props: ProfilPaneliProps) {
+  const u = props.user;
+
   return (
     <>
       {/* Blurred Background Context (Simulating the underlying app) */}
@@ -20,13 +27,13 @@ export function ProfilPaneli(props: ProfilPaneliProps) {
       <div className="flex-1 h-full bg-surface-container-low rounded-xl border border-surface-container-highest opacity-50"></div>
       </div>
       {/* Modal Overlay Backdrop */}
-      <div className="absolute inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-40 transition-opacity"></div>
+      <div className="absolute inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-40 transition-opacity" onClick={props.onClose}></div>
       {/* Side Drawer Panel */}
       <aside aria-labelledby="profile-panel-title" aria-modal="true" className="absolute top-0 right-0 h-full w-full max-w-[420px] bg-surface border-l border-outline-variant z-50 flex flex-col shadow-2xl transition-transform duration-300 ease-in-out transform translate-x-0" role="dialog">
       {/* Header */}
       <header className="flex items-center justify-between p-lg border-b border-surface-container-highest">
       <h2 className="font-h3 text-h3 text-on-surface" id="profile-panel-title">Profil</h2>
-      <button aria-label="Kapat" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+      <button aria-label="Kapat" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50" onClick={props.onClose}>
       <span className="material-symbols-outlined text-[24px]">close</span>
       </button>
       </header>
@@ -42,18 +49,18 @@ export function ProfilPaneli(props: ProfilPaneliProps) {
       <span className="material-symbols-outlined text-[16px]">edit</span>
       </div>
       </div>
-      <h1 className="font-h2 text-h2 text-on-surface tracking-tight mb-xs">Ahmet Yılmaz</h1>
-      <p className="font-label-md text-label-md text-primary bg-primary/10 px-sm py-xs rounded-full inline-block mb-sm">Sistem Yöneticisi</p>
+      <h1 className="font-h2 text-h2 text-on-surface tracking-tight mb-xs">{u.name}</h1>
+      <p className="font-label-md text-label-md text-primary bg-primary/10 px-sm py-xs rounded-full inline-block mb-sm">{u.role}</p>
       <p className="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-xs">
       <span className="material-symbols-outlined text-[16px] opacity-70">mail</span>
-                          ahmet.yilmaz@odarez.com
+                          {u.email}
                       </p>
       </section>
       {/* Account Settings Bento Grid */}
       <section className="p-lg flex flex-col gap-md">
       <h3 className="font-label-sm text-label-sm text-outline uppercase tracking-wider pl-xs">Hesap Ayarları</h3>
       {/* Card 1: Personal Info */}
-      <a className="group flex items-center gap-md p-md rounded-xl bg-surface-container-low border border-surface-container-highest hover:bg-surface-container hover:border-outline-variant transition-all cursor-pointer" href="#">
+      <a className="group flex items-center gap-md p-md rounded-xl bg-surface-container-low border border-surface-container-highest hover:bg-surface-container hover:border-outline-variant transition-all cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('settings'); }}>
       <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary border border-surface-container-highest group-hover:border-primary/30 transition-colors">
       <span className="material-symbols-outlined text-[20px]">person</span>
       </div>
@@ -64,7 +71,7 @@ export function ProfilPaneli(props: ProfilPaneliProps) {
       <span className="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
       </a>
       {/* Card 2: Security */}
-      <a className="group flex items-center gap-md p-md rounded-xl bg-surface-container-low border border-surface-container-highest hover:bg-surface-container hover:border-outline-variant transition-all cursor-pointer" href="#">
+      <a className="group flex items-center gap-md p-md rounded-xl bg-surface-container-low border border-surface-container-highest hover:bg-surface-container hover:border-outline-variant transition-all cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('settings'); }}>
       <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary border border-surface-container-highest group-hover:border-primary/30 transition-colors">
       <span className="material-symbols-outlined text-[20px]">shield_lock</span>
       </div>
@@ -75,7 +82,7 @@ export function ProfilPaneli(props: ProfilPaneliProps) {
       <span className="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
       </a>
       {/* Card 3: Notifications */}
-      <a className="group flex items-center gap-md p-md rounded-xl bg-surface-container-low border border-surface-container-highest hover:bg-surface-container hover:border-outline-variant transition-all cursor-pointer" href="#">
+      <a className="group flex items-center gap-md p-md rounded-xl bg-surface-container-low border border-surface-container-highest hover:bg-surface-container hover:border-outline-variant transition-all cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('settings'); }}>
       <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary border border-surface-container-highest group-hover:border-primary/30 transition-colors">
       <span className="material-symbols-outlined text-[20px]">notifications_active</span>
       </div>
@@ -89,7 +96,7 @@ export function ProfilPaneli(props: ProfilPaneliProps) {
       {/* Preferences Section */}
       <section className="px-lg pb-lg flex flex-col gap-md">
       <h3 className="font-label-sm text-label-sm text-outline uppercase tracking-wider pl-xs">Sistem Tercihleri</h3>
-      <a className="group flex items-center gap-md p-md rounded-xl bg-surface-container-low border border-surface-container-highest hover:bg-surface-container hover:border-outline-variant transition-all cursor-pointer" href="#">
+      <a className="group flex items-center gap-md p-md rounded-xl bg-surface-container-low border border-surface-container-highest hover:bg-surface-container hover:border-outline-variant transition-all cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('settings'); }}>
       <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-on-surface-variant border border-surface-container-highest group-hover:border-outline-variant transition-colors">
       <span className="material-symbols-outlined text-[20px]">dark_mode</span>
       </div>
@@ -103,7 +110,7 @@ export function ProfilPaneli(props: ProfilPaneliProps) {
       </div>
       {/* Footer Actions */}
       <footer className="p-lg border-t border-surface-container-highest bg-surface-container-lowest/50 mt-auto">
-      <button className="w-full flex items-center justify-center gap-sm px-md py-md rounded-lg bg-surface-variant border border-surface-container-highest text-error hover:bg-error-container hover:border-error-container hover:text-on-error-container transition-all focus:outline-none focus:ring-2 focus:ring-error focus:ring-opacity-50 group">
+      <button className="w-full flex items-center justify-center gap-sm px-md py-md rounded-lg bg-surface-variant border border-surface-container-highest text-error hover:bg-error-container hover:border-error-container hover:text-on-error-container transition-all focus:outline-none focus:ring-2 focus:ring-error focus:ring-opacity-50 group" onClick={props.onClose}>
       <span className="material-symbols-outlined text-[20px] group-hover:-translate-x-1 transition-transform">logout</span>
       <span className="font-label-md text-label-md">Çıkış Yap</span>
       </button>

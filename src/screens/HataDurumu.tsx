@@ -9,11 +9,15 @@
 
 import { useState } from "react";
 
-interface HataDurumuProps {}
+interface HataDurumuProps {
+  error?: string | null;
+  onRetry?: () => void;
+  onHelp?: () => void;
+}
 
 export function HataDurumu(props: HataDurumuProps) {
   return (
-    <>
+    <div className="min-h-screen bg-[#11131b] flex items-center justify-center p-4">
       {/* Asymmetric Error Card */}
       <main className="w-full max-w-[900px] bg-surface-container rounded-xl border border-outline-variant overflow-hidden shadow-2xl flex flex-col md:flex-row">
       {/* Left Column: Graphic Area */}
@@ -46,16 +50,16 @@ export function HataDurumu(props: HataDurumuProps) {
                           Bağlantı Sorunu
                       </h1>
       <p className="font-body-lg text-body-lg text-on-surface-variant">
-                          Sunucu ile iletişim kurarken beklenmeyen bir hata oluştu. Veriler şu anda yüklenemiyor. Lütfen internet bağlantınızı kontrol edip kısa bir süre sonra tekrar deneyin.
+                          {props.error || 'Sunucu ile iletişim kurarken beklenmeyen bir hata oluştu. Veriler şu anda yüklenemiyor. Lütfen internet bağlantınızı kontrol edip kısa bir süre sonra tekrar deneyin.'}
                       </p>
       </div>
       {/* Actions */}
       <div className="flex flex-col sm:flex-row items-center gap-md">
-      <button className="w-full sm:w-auto px-xl py-md bg-primary-container text-on-primary-container font-label-md text-label-md rounded-lg flex items-center justify-center gap-sm hover:bg-primary-container/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background" type="button">
+      <button className="w-full sm:w-auto px-xl py-md bg-primary-container text-on-primary-container font-label-md text-label-md rounded-lg flex items-center justify-center gap-sm hover:bg-primary-container/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background" type="button" onClick={() => props.onRetry?.()}>
       <span className="material-symbols-outlined text-[20px]">refresh</span>
                           Tekrar Dene
                       </button>
-      <a className="w-full sm:w-auto px-lg py-md text-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-sm hover:bg-surface-container-highest transition-colors" href="#">
+      <a className="w-full sm:w-auto px-lg py-md text-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-sm hover:bg-surface-container-highest transition-colors cursor-pointer" onClick={(e) => { e.preventDefault(); props.onHelp?.(); }}>
       <span className="material-symbols-outlined text-[20px]">help</span>
                           Yardım Al
                       </a>
@@ -68,6 +72,6 @@ export function HataDurumu(props: HataDurumuProps) {
       </div>
       </div>
       </main>
-    </>
+    </div>
   );
 }
