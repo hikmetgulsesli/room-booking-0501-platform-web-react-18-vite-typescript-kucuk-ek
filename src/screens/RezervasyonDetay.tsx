@@ -59,7 +59,7 @@ export function RezervasyonDetay(props: RezervasyonDetayProps) {
                       Odalar
                   </a>
       {/* Takvim (ACTIVE) */}
-      <a className="bg-blue-600/10 text-blue-500 border-r-2 border-blue-500 flex items-center px-4 py-3 ml-2 rounded-l-lg cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); }}>
+      <a className="bg-blue-600/10 text-blue-500 border-r-2 border-blue-500 flex items-center px-4 py-3 ml-2 rounded-l-lg cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); props.actions.navigate('calendar'); }}>
       <span className="material-symbols-outlined mr-3 fill">calendar_month</span>
                       Takvim
                   </a>
@@ -199,7 +199,10 @@ export function RezervasyonDetay(props: RezervasyonDetayProps) {
       <div className="bg-surface-container rounded-xl border border-outline-variant p-lg shadow-sm">
       <div className="flex items-center justify-between mb-md">
       <h2 className="font-h3 text-h3 text-on-surface">Katılımcılar <span className="text-on-surface-variant font-normal">({r.attendees.length})</span></h2>
-      <button className="text-primary hover:text-primary-fixed transition-colors font-label-sm text-label-sm flex items-center gap-1">
+      <button className="text-primary hover:text-primary-fixed transition-colors font-label-sm text-label-sm flex items-center gap-1" onClick={() => {
+        const emails = r.attendees.map(a => a.name.toLowerCase().replace(/\s+/g, '.') + '@odarez.com').join(',');
+        window.open(`mailto:${emails}?subject=${encodeURIComponent(r.title)}`, '_blank');
+      }}>
       <span className="material-symbols-outlined text-[16px]">mail</span>
                                       Tümüne E-posta Gönder
                                   </button>
